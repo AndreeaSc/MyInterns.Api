@@ -29,6 +29,21 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<User> getAll() {
+		final List<User> userList = sessionFactory.getCurrentSession().createCriteria(User.class).list();
+
+		System.out.println("************ ALL USERs ****************");
+
+		for (final User user : userList) {
+			System.out.printf("*** Id:%s \t Username:%s \t Password:%s  Mentor:%s \n", user.getId(), user.getUsername(),
+					user.getPassword(), user.getMentor().getFirstName() + " " + user.getMentor().getLastName());
+		}
+		
+		return userList;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public void readAll() {
 		final List<User> userList = sessionFactory.getCurrentSession().createCriteria(User.class).list();
 

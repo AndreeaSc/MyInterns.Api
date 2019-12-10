@@ -16,7 +16,7 @@ http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
     location="classpath:database.properties" />
 
   <context:component-scan
-    base-package="net.andreea.MyInterns8.persistence.dao" />
+    base-package="net.andreea.MyInterns.persistance.dao" />
   <tx:annotation-driven/>
 
 
@@ -49,7 +49,7 @@ http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
         <prop key="hibernate.dialect">${hibernate.dialect}</prop>
         <prop key="hibernate.show_sql">${hibernate.show_sql:false}</prop>
         <prop key="hibernate.format_sql">${hibernate.format_sql:false}</prop>
-        <prop key="hibernate.hbm2ddl.auto">create</prop>
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
       </props>
     </property>
   </bean>

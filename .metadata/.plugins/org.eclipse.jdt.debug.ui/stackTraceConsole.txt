@@ -1,0 +1,12 @@
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readAll() {
+		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
+
+		System.out.println("************ ALL MENTORSs ****************");
+
+		for (final Mentor detail : detailList) {
+			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
+					detail.getLastName());
+		}
+	}

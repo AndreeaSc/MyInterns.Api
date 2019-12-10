@@ -1,5 +1,6 @@
 package net.andreea.MyInterns.persistance.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -57,5 +58,27 @@ public class MentorDaoImpl implements MentorDao {
 		}
 
 		return mentor;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Mentor> getAllMentors() {
+		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
+
+		System.out.println("************ ALL MENTORSs Get it!!!****************");
+
+		for (final Mentor detail : detailList) {
+			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
+					detail.getLastName());
+		}
+
+		return detailList;
+	}
+
+	public List<String> getTests() {
+		List data = new ArrayList<String>();
+		
+		data.add("textul meu doi");
+		
+		return data;
 	}
 }

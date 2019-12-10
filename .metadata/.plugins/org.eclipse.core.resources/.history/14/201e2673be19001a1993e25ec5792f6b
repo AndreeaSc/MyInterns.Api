@@ -1,0 +1,36 @@
+package net.andreea.MyInterns.comon.controller;
+
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import net.andreea.MyInterns.persistance.dao.MentorDao;
+import net.andreea.MyInterns.persistance.dao.impl.MentorDaoImpl;
+import net.andreea.MyInterns.persistance.entity.Mentor;
+
+@Path("/mentors")
+public class MentorController {
+
+	MentorDaoImpl mentorDao = new MentorDaoImpl();
+	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+	MentorDao mentor = context.getBean(MentorDao.class);
+
+	@GET
+	@Path("/work")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sayPlainTextHello() {
+		return "functioneaza";
+	}
+
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public List<Mentor> getAll() {
+//		System.out.println("getAll mentors called....");
+//		return mentor.getAll();
+//	}
+}
