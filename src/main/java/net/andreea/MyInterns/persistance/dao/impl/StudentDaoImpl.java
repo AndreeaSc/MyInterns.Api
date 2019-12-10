@@ -15,6 +15,7 @@ import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.StudentDao;
 import net.andreea.MyInterns.persistance.entity.Mentor;
 import net.andreea.MyInterns.persistance.entity.Student;
+import net.andreea.MyInterns.persistance.entity.Student;
 
 @Repository
 @Transactional
@@ -69,5 +70,19 @@ public class StudentDaoImpl implements StudentDao {
 		}
 
 		return studentSet;
+	}
+
+	@Override
+	public List<Student> getAll() {
+		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+
+		System.out.println("************ ALL Students Get it!!!****************");
+
+//		for (final Student detail : detailList) {
+//			System.out.printf("*** Id:%s \t Description:%s \t Name:%s \n", detail.getId(), detail.getDescription()(),
+//					detail.getStudentName()));
+//		}
+
+		return detailList;
 	}
 }

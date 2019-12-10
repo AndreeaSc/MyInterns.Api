@@ -1,3 +1,4 @@
+net\andreea\MyInterns\comon\controller\StudentController.class
 net\andreea\MyInterns\persistance\dao\StudentDao.class
 net\andreea\MyInterns\persistance\dao\impl\MentorDaoImpl.class
 net\andreea\MyInterns\persistance\dao\impl\UserDaoImpl.class
@@ -10,6 +11,7 @@ net\andreea\MyInterns\persistance\entity\Student.class
 net\andreea\MyInterns\persistance\entity\Holidays.class
 net\andreea\MyInterns\persistance\dao\UserDao.class
 net\andreea\MyInterns\persistance\dao\impl\StudentDaoImpl.class
+net\andreea\MyInterns\comon\controller\UserController.class
 net\andreea\MyInterns\persistance\dao\HolidaysDao.class
 Application.class
 net\andreea\MyInterns\comon\controller\MentorController.class

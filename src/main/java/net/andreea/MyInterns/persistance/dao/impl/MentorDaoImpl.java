@@ -60,27 +60,25 @@ public class MentorDaoImpl implements MentorDao {
 		return mentor;
 	}
 
-//	@SuppressWarnings("unchecked")
-//	public List<Mentor> getAll() {
-//		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
-//
-//		System.out.println("************ ALL MENTORSs Get it!!!****************");
-//
-//		for (final Mentor detail : detailList) {
-//			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
-//					detail.getLastName());
-//		}
-//
-//		return detailList;
-//	}
+	@SuppressWarnings("unchecked")
+	public List<Mentor> getAllMentors() {
+		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
 
-	public List<String> getAllTests() {
+		System.out.println("************ ALL MENTORSs Get it!!!****************");
 
-		List<String> pttest = new ArrayList<String>();
+		for (final Mentor detail : detailList) {
+			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
+					detail.getLastName());
+		}
+
+		return detailList;
+	}
+
+	public List<String> getTests() {
+		List data = new ArrayList<String>();
 		
-		pttest.add("tesul meu1");
-		pttest.add("tesul meu2");
-
-		return pttest;
+		data.add("textul meu doi");
+		
+		return data;
 	}
 }
