@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects/>
+ <used-by-projects/>
+ <paths/>
+ <validation>
+  <el>
+   <linked-el length="19" name="%0" offset="1164" path="%1"/>
+   <linked-el length="29" name="%2" offset="1911" path="%1"/>
+   <linked-el length="20" name="%3" offset="1809" path="%4"/>
+   <linked-el length="32" name="%5" offset="529" path="%6"/>
+   <linked-el length="27" name="%5" offset="673" path="%6"/>
+   <linked-el length="19" name="%7" offset="1105" path="%1"/>
+   <linked-el length="32" name="%8" offset="529" path="%6"/>
+   <linked-el length="27" name="%8" offset="673" path="%6"/>
+   <linked-el length="17" name="%9" offset="2123" path="%4"/>
+   <linked-el length="17" name="%9" offset="1970" path="%4"/>
+   <linked-el length="17" name="%9" offset="2278" path="%4"/>
+   <linked-el length="20" name="%10" offset="1766" path="%1"/>
+   <linked-el length="19" name="%11" offset="1105" path="%1"/>
+   <linked-el length="19" name="%11" offset="1164" path="%1"/>
+   <linked-el length="14" name="%11" offset="1051" path="%1"/>
+   <linked-el length="26" name="%11" offset="990" path="%1"/>
+   <linked-el length="14" name="%12" offset="1051" path="%1"/>
+   <linked-el length="20" name="%13" offset="1766" path="%1"/>
+   <linked-el length="20" name="%13" offset="1809" path="%4"/>
+   <linked-el length="29" name="%13" offset="1911" path="%1"/>
+   <linked-el length="27" name="%13" offset="1834" path="%1"/>
+   <linked-el length="32" name="%14" offset="529" path="%6"/>
+   <linked-el length="27" name="%14" offset="673" path="%6"/>
+   <linked-el length="26" name="%15" offset="1610" path="%4"/>
+   <linked-el length="26" name="%16" offset="1082" path="%4"/>
+   <linked-el length="26" name="%16" offset="1418" path="%4"/>
+   <linked-el length="26" name="%16" offset="1250" path="%4"/>
+   <linked-el length="26" name="%16" offset="915" path="%4"/>
+   <linked-el length="17" name="%17" offset="2123" path="%4"/>
+   <linked-el length="17" name="%17" offset="1970" path="%4"/>
+   <linked-el length="17" name="%17" offset="2278" path="%4"/>
+   <linked-el length="32" name="%18" offset="529" path="%6"/>
+   <linked-el length="27" name="%18" offset="673" path="%6"/>
+   <linked-el length="27" name="%19" offset="1834" path="%1"/>
+   <linked-el length="32" name="%20" offset="529" path="%6"/>
+   <linked-el length="27" name="%20" offset="673" path="%6"/>
+   <linked-el length="26" name="%21" offset="1610" path="%4"/>
+   <linked-el length="26" name="%22" offset="990" path="%1"/>
+   <linked-el length="26" name="%23" offset="1082" path="%4"/>
+   <linked-el length="26" name="%23" offset="1418" path="%4"/>
+   <linked-el length="26" name="%23" offset="1250" path="%4"/>
+   <linked-el length="26" name="%23" offset="915" path="%4"/>
+   <linked-el length="26" name="%24" offset="1610" path="%4"/>
+   <linked-el length="70" name="%25" offset="37866" path="%26"/>
+   <linked-el length="424" name="%25" offset="37068" path="%26"/>
+   <linked-el length="424" name="%25" offset="37068" path="%27"/>
+   <linked-el length="70" name="%25" offset="37866" path="%27"/>
+  </el>
+ </validation>
+ <aliases>
+  <alias path="jdbc.password" value="%0"/>
+  <alias path="hibernate.format_sql" value="%2"/>
+  <alias path="jersey.version" value="%9"/>
+  <alias path="hibernate.dialect" value="%10"/>
+  <alias path="jdbc" value="%11"/>
+  <alias path="jdbc.url" value="%12"/>
+  <alias path="hibernate" value="%13"/>
+  <alias
+   path="/MyInterns8/.metadata/.plugins/org.jboss.tools.central/valid_jboss_buzz.xml" value="%26"/>
+  <alias path="/MyInterns8/pom.xml" value="%4"/>
+  <alias path="jersey" value="%17"/>
+  <alias
+   path="/MyInterns8/.metadata/.plugins/org.jboss.tools.central/jboss_buzz.xml" value="%27"/>
+  <alias path="hibernate.show_sql" value="%19"/>
+  <alias path="org.eclipse.m2e.log" value="%20"/>
+  <alias path="mysql" value="%21"/>
+  <alias path="jdbc.driverClassName" value="%22"/>
+  <alias path="SYSTEM_DEFAULTWORKINGDIRECTORY" value="%25"/>
+  <alias path="hibernate.version" value="%3"/>
+  <alias path="/MyInterns8/src/main/resources/applicationContext.xml" value="%1"/>
+  <alias path="org.eclipse.m2e.log.dir" value="%5"/>
+  <alias path="jdbc.username" value="%7"/>
+  <alias path="org" value="%8"/>
+  <alias path="org.eclipse.m2e" value="%14"/>
+  <alias path="mysql.connector" value="%15"/>
+  <alias
+   path="/MyInterns8/.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.1.13.0.20190716-1624.xml" value="%6"/>
+  <alias path="springframework.version" value="%16"/>
+  <alias path="org.eclipse" value="%18"/>
+  <alias path="springframework" value="%23"/>
+  <alias path="mysql.connector.version" value="%24"/>
+ </aliases>
+ <includes/>
+ <uris/>
+</kb-project>

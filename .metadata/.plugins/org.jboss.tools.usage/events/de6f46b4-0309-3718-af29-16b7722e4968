@@ -1,0 +1,11 @@
+#Sun Dec 08 13:19:06 EET 2019
+vl=0 \= failed, 1 \= successful
+l=Server Runtime ID
+ct=server
+d=1575803946345
+c=1
+cmp=server
+a=new
+cl=org.eclipse.jst.server.tomcat.80
+v=3.7.0
+s=0

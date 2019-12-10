@@ -1,0 +1,29 @@
+package net.andreea.MyInterns.comon.controller;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import net.andreea.MyInterns.persistance.dao.MentorDao;
+import net.andreea.MyInterns.persistance.dao.impl.MentorDaoImpl;
+
+@Path("/mentor")
+public class MentorController {
+
+	MentorDaoImpl mentorDao = new MentorDaoImpl();
+	
+	@GET
+	@Path("/work")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sayPlainTextHello() {
+		return "functioneaza";
+	}
+	
+	@GET
+	@Path("/mentors")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getAll() {
+		return mentorDao.getAll();
+	}
+}

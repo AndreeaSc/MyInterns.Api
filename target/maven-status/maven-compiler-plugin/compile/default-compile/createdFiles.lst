@@ -12,3 +12,4 @@ net\andreea\MyInterns\persistance\dao\UserDao.class
 net\andreea\MyInterns\persistance\dao\impl\StudentDaoImpl.class
 net\andreea\MyInterns\persistance\dao\HolidaysDao.class
 Application.class
+net\andreea\MyInterns\comon\controller\MentorController.class

@@ -1,0 +1,5 @@
+INDEX VERSION 1.131
+C:\Users\aschiau\Documents\Proiecte\Final\MyInterns\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2065720288.index
+\MyInterns12\src\main\java
+C:\Users\aschiau\Documents\Proiecte\Final\MyInterns\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3391620466.index
+\MyInterns12\src\main\java
