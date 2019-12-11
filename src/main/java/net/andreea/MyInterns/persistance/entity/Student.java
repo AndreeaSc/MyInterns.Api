@@ -74,6 +74,12 @@ public class Student {
 		this.studentName = student;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", studentName=" + studentName + ", description=" + description + ", mentors="
+				+ mentors + "]";
+	}
+
 	public String getDescription() {
 		return description;
 	}
