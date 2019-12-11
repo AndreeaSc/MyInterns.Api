@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,15 +22,9 @@ import net.andreea.MyInterns.persistance.entity.Student;
 
 @Path("/student")
 public class StudentController {
+	
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	StudentDao studentDao = appContext.getBean(StudentDao.class);
-
-	@GET
-	@Path("/work")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String sayPlainTextHello() {
-		return "functioneaz2";
-	}
 
 	@GET
 	@Path("/students")
@@ -40,7 +35,7 @@ public class StudentController {
 	}
 
 	@GET
-	@Path("/student/{id}")
+	@Path("/getBy/{id}")
 	@Produces({ MediaType.APPLICATION_JSON})
 	public Student getById(@PathParam("id") int id) {
 		
@@ -58,5 +53,25 @@ public class StudentController {
 		studentDao.saveOrUpdate(student);
 
 		return Response.ok(student).build();
+	}
+	
+	@POST
+	@Path("/add")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response add(Student student) {
+
+		studentDao.saveOrUpdate(student);
+
+		return Response.ok(student).build();
+	}
+	
+	@DELETE
+	@Path("/delete/{id}")
+	@Produces({ MediaType.APPLICATION_JSON})
+	public Response delete(@PathParam("id") int id) {
+
+		studentDao.deleteStudent(id);
+
+		return Response.ok(id).build();
 	}
 }
