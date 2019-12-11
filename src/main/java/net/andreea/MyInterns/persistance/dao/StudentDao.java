@@ -18,4 +18,6 @@ public interface StudentDao {
 	Set<Student> getMentorStudents(final Mentor mentor);
 
 	List<Student> getAll();
+
+	Student getById(long id);
 }

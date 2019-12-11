@@ -1,5 +1,6 @@
 package net.andreea.MyInterns.persistance.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.SharedSessionContract;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +19,8 @@ import net.andreea.MyInterns.persistance.dao.StudentDao;
 import net.andreea.MyInterns.persistance.entity.Mentor;
 import net.andreea.MyInterns.persistance.entity.Student;
 import net.andreea.MyInterns.persistance.entity.Student;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 @Repository
 @Transactional
@@ -74,15 +79,28 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public List<Student> getAll() {
+
 		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
 
-		System.out.println("************ ALL Students Get it!!!****************");
-
-//		for (final Student detail : detailList) {
-//			System.out.printf("*** Id:%s \t Description:%s \t Name:%s \n", detail.getId(), detail.getDescription()(),
-//					detail.getStudentName()));
-//		}
-
 		return detailList;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public Student getById(long id) {
+		Student student = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE id=:id").setParameter("id", id);
+
+		try {
+			student = (Student) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in getStudent: %s \n", ex.getMessage());
+		}
+
+		return student;
 	}
 }
