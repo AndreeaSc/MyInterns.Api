@@ -21,8 +21,8 @@ public class Student {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	@Column(name = "student_name")
-	private String studentName;
+	@Column(name = "name")
+	private String name;
 
 	@Column(name = "description")
 	private String description;
@@ -33,8 +33,8 @@ public class Student {
 	public Student() {
 	}
 
-	public Student(final String studentName, final String description) {
-		this.studentName = studentName;
+	public Student(final String name, final String description) {
+		this.name = name;
 		this.description = description;
 	}
 
@@ -49,12 +49,12 @@ public class Student {
 		}
 
 		Student student = (Student) o;
-		return Objects.equals(studentName, student.studentName);
+		return Objects.equals(name, student.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(studentName);
+		return Objects.hash(name);
 	}
 
 	// Getters and setters
@@ -66,17 +66,17 @@ public class Student {
 		this.id = id;
 	}
 
-	public String getStudentName() {
-		return studentName;
+	public String getName() {
+		return name;
 	}
 
-	public void setStudent(final String student) {
-		this.studentName = student;
+	public void setName(final String student) {
+		this.name = student;
 	}
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", studentName=" + studentName + ", description=" + description + ", mentors="
+		return "Student [id=" + id + ", name=" + name + ", description=" + description + ", mentors="
 				+ mentors + "]";
 	}
 

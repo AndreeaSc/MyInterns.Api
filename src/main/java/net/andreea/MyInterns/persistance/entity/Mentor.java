@@ -49,7 +49,7 @@ public class Mentor {
 	}
 
 	public void addStudent(Student student) {
-		System.out.printf("Adding student '%s' to '%s' \n", student.getStudentName(), this.firstName);
+		System.out.printf("Adding student '%s' to '%s' \n", student.getName(), this.firstName);
 		students.add(student);
 		student.getMentors().add(this);
 	}
