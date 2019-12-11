@@ -30,28 +30,28 @@ public class StudentDaoImpl implements StudentDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void saveOrUpdate(String studentName, String description) {
-		final Student student = new Student(studentName, description);
+	public void saveOrUpdate(String name, String description) {
+		final Student student = new Student(name, description);
 		saveOrUpdate(student);
 	}
 
 	@Override
 	public void saveOrUpdate(final Student student) {
 		new PersistenceOperations().saveOrUpdate(sessionFactory, student,
-				"*** Student '" + student.getStudentName() + "' saved!");
+				"*** Student '" + student.getName() + "' saved!");
 	}
 
 	@Override
-	public Student getStudent(final String studentName) {
-		final Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE studentName=:studentName");
-		q.setParameter("studentName", studentName);
+	public Student getStudent(final String name) {
+		final Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE name=:name");
+		q.setParameter("name", name);
 
 		Student student = null;
 
 		try {
 			student = (Student) q.uniqueResult();
 			if (student == null) {
-				System.out.println("Student with studentName '" + studentName + "' Not Found !");
+				System.out.println("Student with name '" + name + "' Not Found !");
 			}
 		} catch (Exception ex) {
 			System.out.printf("Exception in getStudent: %s \n", ex.getMessage());
