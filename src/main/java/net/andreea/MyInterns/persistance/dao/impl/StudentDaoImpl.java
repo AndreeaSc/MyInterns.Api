@@ -98,9 +98,25 @@ public class StudentDaoImpl implements StudentDao {
 		try {
 			student = (Student) q.uniqueResult();
 		} catch (Exception ex) {
-			System.out.printf("Exception in getStudent: %s \n", ex.getMessage());
+			System.out.printf("Exception in getStudentbyId: %s \n", ex.getMessage());
 		}
 
 		return student;
+	}
+
+	@Override
+	public void deleteStudent(long id) {
+		Student student = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Student WHERE id=:id").setParameter("id",
+				id);
+
+		try {
+			student = (Student) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteStudent: %s \n", ex.getMessage());
+		}
+		
+		q.executeUpdate();
 	}
 }
