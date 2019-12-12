@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import net.andreea.MyInterns.persistance.dao.UserDao;
-import net.andreea.MyInterns.persistance.entity.Student;
 import net.andreea.MyInterns.persistance.entity.User;
 
 @Path("/user")

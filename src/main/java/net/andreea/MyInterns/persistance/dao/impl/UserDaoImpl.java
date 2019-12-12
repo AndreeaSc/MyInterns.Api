@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.UserDao;
-import net.andreea.MyInterns.persistance.entity.Mentor;
-import net.andreea.MyInterns.persistance.entity.User;
 import net.andreea.MyInterns.persistance.entity.User;
 
 @Repository
