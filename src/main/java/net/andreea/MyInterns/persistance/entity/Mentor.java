@@ -72,8 +72,6 @@ public class Mentor {
 		return 31;
 	}
 
-	// Getters and setters
-
 	public Long getId() {
 		return id;
 	}

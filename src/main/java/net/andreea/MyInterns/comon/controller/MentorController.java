@@ -40,9 +40,9 @@ public class MentorController {
 	}
 	
 	@GET
-	@Path("/getBy/{id}")
+	@Path("/getBy/{user_id}")
 	@Produces({ MediaType.APPLICATION_JSON})
-	public Mentor getById(@PathParam("id") int id) {
+	public Mentor getById(@PathParam("user_id") int id) {
 		
 		Mentor mentor = mentorDao.getById(id);
 		System.out.println(mentor);
@@ -71,9 +71,9 @@ public class MentorController {
 	}
 	
 	@DELETE
-	@Path("/delete/{id}")
+	@Path("/delete/{user_id}")
 	@Produces({ MediaType.APPLICATION_JSON})
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("user_id") long id) {
 
 		mentorDao.deleteMentor(id);
 
