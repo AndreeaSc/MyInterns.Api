@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.MentorDao;
 import net.andreea.MyInterns.persistance.entity.Mentor;
+import net.andreea.MyInterns.persistance.entity.Student;
 import net.andreea.MyInterns.persistance.entity.User;
 
 @Repository
@@ -76,9 +77,49 @@ public class MentorDaoImpl implements MentorDao {
 
 	public List<String> getTests() {
 		List data = new ArrayList<String>();
-		
+
 		data.add("textul meu doi");
-		
+
 		return data;
 	}
+
+	@Override
+	public Mentor getById(int id) {
+		Mentor mentor = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM Mentor WHERE id=:id").setParameter("id", id);
+
+		try {
+			mentor = (Mentor) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in getMentorById: %s \n", ex.getMessage());
+		}
+
+		return mentor;
+	}
+
+	@Override
+	public void deleteMentor(int id) {
+		Mentor mentor = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Mentor WHERE id=:id").setParameter("id",
+				id);
+
+		try {
+			mentor = (Mentor) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteMentor: %s \n", ex.getMessage());
+		}
+
+		q.executeUpdate();
+	}
+
+	@Override
+	public List<Mentor> getAll() {
+
+		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
+
+		return detailList;
+	}
+
 }

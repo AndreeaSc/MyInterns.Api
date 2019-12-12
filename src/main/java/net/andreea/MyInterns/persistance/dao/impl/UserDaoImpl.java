@@ -13,6 +13,7 @@ import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.UserDao;
 import net.andreea.MyInterns.persistance.entity.Mentor;
 import net.andreea.MyInterns.persistance.entity.User;
+import net.andreea.MyInterns.persistance.entity.User;
 
 @Repository
 @Transactional
@@ -22,9 +23,15 @@ public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void saveOrUpdate(String username, String password, Mentor mentor) {
-		final User user = new User(username, password);
-		new PersistenceOperations().saveOrUpdate(sessionFactory, user, "*** User saved!");
+	public void saveOrUpdate(String username, String password, Boolean isMentor) {
+		final User user = new User(username, password, isMentor);
+		saveOrUpdate(user);
+
+	}
+	
+	@Override
+	public void saveOrUpdate(final User user) {
+		new PersistenceOperations().saveOrUpdate(sessionFactory, user, "*** User '" + user.getEmail() + "' saved!");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -35,8 +42,8 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("************ ALL USERs ****************");
 
 		for (final User user : userList) {
-			System.out.printf("*** Id:%s \t Username:%s \t Password:%s  Mentor:%s \n", user.getId(), user.getUsername(),
-					user.getPassword(), user.getMentor().getFirstName() + " " + user.getMentor().getLastName());
+			System.out.printf("*** Id:%s \t Email:%s \t Password:%s  isMentor:%s \n", user.getId(), user.getEmail(),
+					user.getPassword(), user.getIsMentor());
 		}
 		
 		return userList;
@@ -50,16 +57,16 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("************ ALL USERs ****************");
 
 		for (final User user : userList) {
-			System.out.printf("*** Id:%s \t Username:%s \t Password:%s  Mentor:%s \n", user.getId(), user.getUsername(),
-					user.getPassword(), user.getMentor().getFirstName() + " " + user.getMentor().getLastName());
+			System.out.printf("*** Id:%s \t Email:%s \t Password:%s  isMentor:%s \n", user.getId(), user.getEmail(),
+					user.getPassword(), user.getIsMentor());
 		}
 	}
 
 	@Override
-	public User getUser(String username, String password) {
+	public User getUser(String email, String password) {
 		final Query q = sessionFactory.getCurrentSession()
-				.createQuery("FROM User WHERE username=:username AND password=:password");
-		q.setParameter("username", username);
+				.createQuery("FROM User WHERE email=:email AND password=:password");
+		q.setParameter("email", email);
 		q.setParameter("password", password);
 
 		User user = null;
@@ -67,7 +74,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			user = (User) q.uniqueResult();
 			if (user == null) {
-				System.out.println("User with username '" + username + "' Not Found !");
+				System.out.println("User with email '" + email + "' Not Found !");
 			}
 		} catch (Exception ex) {
 			System.out.printf("Exception in getUser: %s \n", ex.getMessage());
@@ -75,10 +82,37 @@ public class UserDaoImpl implements UserDao {
 
 		return user;
 	}
+	
+	@Override
+	public User getById(long id) {
+		User user = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM User WHERE id=:id").setParameter("id", id);
+
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in getStudentbyId: %s \n", ex.getMessage());
+		}
+
+		return user;
+	}
 
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
+	public void delete(long id) {
+		User user = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE id=:id").setParameter("id", id);
+
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteStudent: %s \n", ex.getMessage());
+		}
+		
+		q.executeUpdate();
 
 	}
+
+
 }
