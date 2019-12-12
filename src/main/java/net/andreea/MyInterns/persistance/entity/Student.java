@@ -27,7 +27,7 @@ public class Student {
 	@Column(name = "description")
 	private String description;
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "students")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
 	private Set<Mentor> mentors = new HashSet<>();
 
 	public Student() {

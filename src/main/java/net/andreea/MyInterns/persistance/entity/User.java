@@ -22,18 +22,42 @@ public class User {
 	@Column(name = "username")
 	private String username;
 
+	@Column(name = "email")
+	private String email;
+
 	@Column(name = "password")
 	private String password;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@Column(name = "isMentor")
+	private Boolean isMentor;
+	
+	@OneToOne(mappedBy = "user", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST }, orphanRemoval = true, fetch = FetchType.LAZY)	
 	private Mentor mentor;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Boolean getIsMentor() {
+		return isMentor;
+	}
+
+	public void setIsMentor(Boolean isMentor) {
+		this.isMentor = isMentor;
+	}
 
 	public User() {
 	}
 
-	public User(final String username, final String password) {
-		this.username = username;
+	public User(final String email, final String password, final Boolean isMentor) {
+		this.email = email;
 		this.password = password;
+		this.isMentor = isMentor;
 	}
 
 	public Long getId() {

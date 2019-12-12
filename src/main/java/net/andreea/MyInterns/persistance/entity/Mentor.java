@@ -31,11 +31,11 @@ public class Mentor {
 	@Column(name = "lastname")
 	private String lastName;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)  
 	@MapsId
 	private User user;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinTable(name = "mentor_student_matrix", joinColumns = @JoinColumn(name = "mentor_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private Set<Student> students = new LinkedHashSet<>();
 

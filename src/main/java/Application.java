@@ -17,7 +17,13 @@ public class Application {
 	public static void main(String[] args) {
 
 		final ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		
 		StudentDao studentDao = appContext.getBean(StudentDao.class);
-		studentDao.deleteStudent(4);
+		MentorDao mentorDao = appContext.getBean(MentorDao.class);
+		UserDao userDao = appContext.getBean(UserDao.class);
+			
+		userDao.saveOrUpdate("blandiana@gmail.com", "root", true);
+		
+		userDao.getAll();		
 	}
 }
