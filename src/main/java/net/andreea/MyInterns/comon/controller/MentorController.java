@@ -69,14 +69,4 @@ public class MentorController {
 
 		return Response.ok(mentor).build();
 	}
-	
-	@DELETE
-	@Path("/delete/{user_id}")
-	@Produces({ MediaType.APPLICATION_JSON})
-	public Response delete(@PathParam("user_id") long id) {
-
-		mentorDao.deleteMentor(id);
-
-		return Response.ok(id).build();
-	}
 }

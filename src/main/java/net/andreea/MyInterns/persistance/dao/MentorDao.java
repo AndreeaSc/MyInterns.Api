@@ -18,8 +18,6 @@ public interface MentorDao {
 
 	Mentor getById(int id);
 
-	void deleteMentor(long id);
-
 	List<Mentor> getAll();
 
 	void saveOrUpdateIfMentor(User user, Mentor mentor);
