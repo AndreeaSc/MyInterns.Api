@@ -9,7 +9,7 @@ import net.andreea.MyInterns.persistance.entity.User;
 
 public interface StudentDao {
 
-	void saveOrUpdate(final String firstName, final String lastName);
+	void saveOrUpdate(final String firstName, final String lastName, final String description);
 
 	void saveOrUpdate(final Student student);
 

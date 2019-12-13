@@ -21,8 +21,11 @@ public class Student {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "firstname")
+	private String firstname;
+
+	@Column(name = "lastname")
+	private String lastname;
 
 	@Column(name = "description")
 	private String description;
@@ -33,9 +36,10 @@ public class Student {
 	public Student() {
 	}
 
-	public Student(final String name, final String description) {
-		this.name = name;
+	public Student(final String firstname, final String description, final String lastname) {
+		this.firstname = firstname;
 		this.description = description;
+		this.lastname = lastname;
 	}
 
 	@Override
@@ -49,12 +53,12 @@ public class Student {
 		}
 
 		Student student = (Student) o;
-		return Objects.equals(name, student.name);
+		return Objects.equals(firstname, student.firstname);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(firstname);
 	}
 
 	// Getters and setters
@@ -64,20 +68,6 @@ public class Student {
 
 	public void setId(final Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(final String student) {
-		this.name = student;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", description=" + description + ", mentors="
-				+ mentors + "]";
 	}
 
 	public String getDescription() {
@@ -94,5 +84,27 @@ public class Student {
 
 	public void setMentors(final Set<Mentor> mentors) {
 		this.mentors = mentors;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", description="
+				+ description + ", mentors=" + mentors + "]";
 	}
 }
