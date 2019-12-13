@@ -5,12 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.UserDao;
+import net.andreea.MyInterns.persistance.entity.User;
 import net.andreea.MyInterns.persistance.entity.User;
 
 @Repository
@@ -98,17 +100,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void delete(long id) {
-		User user = null;
 
-		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE id=:id").setParameter("id", id);
-
-		try {
-			user = (User) q.uniqueResult();
-		} catch (Exception ex) {
-			System.out.printf("Exception in deleteStudent: %s \n", ex.getMessage());
-		}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 		
-		q.executeUpdate();
+		User user = (User) session.load(User.class, id);
+
+		session.delete(user);
+
+		session.getTransaction().commit();
 
 	}
 

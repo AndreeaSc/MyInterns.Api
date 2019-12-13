@@ -102,18 +102,8 @@ public class MentorDaoImpl implements MentorDao {
 		return null;
 	}
 
-	@Override
-	public void deleteMentor(long id) {
-
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		
-		Mentor mentor = (Mentor) session.load(Mentor.class, id);
-
-		session.delete(mentor);
-
-		session.getTransaction().commit();
-	}
+	
+	
 
 	@Override
 	public List<Mentor> getAll() {
