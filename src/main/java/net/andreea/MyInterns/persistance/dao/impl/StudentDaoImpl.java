@@ -1,8 +1,6 @@
 package net.andreea.MyInterns.persistance.dao.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -13,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import net.andreea.MyInterns.comon.PersistenceOperations;
 import net.andreea.MyInterns.persistance.dao.StudentDao;
-import net.andreea.MyInterns.persistance.entity.Mentor;
 import net.andreea.MyInterns.persistance.entity.Student;
+import net.andreea.MyInterns.persistance.entity.User;
 
 @Repository
 @Transactional
@@ -24,67 +22,22 @@ public class StudentDaoImpl implements StudentDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void saveOrUpdate(String firstName, String lastName, String description) {
-		final Student student = new Student(firstName, lastName, description);
-		saveOrUpdate(student);		
-	}
-
-	@Override
-	public void saveOrUpdate(final Student student) {
-		new PersistenceOperations().saveOrUpdate(sessionFactory, student,
-				"*** Student '" + student.getFirstname() + "' saved!");
-	}
-
-	@Override
-	public Student getStudent(final String firstname) {
-		final Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE firstname=:firstname");
-		q.setParameter("firstname", firstname);
-
-		Student student = null;
-
-		try {
-			student = (Student) q.uniqueResult();
-			if (student == null) {
-				System.out.println("Student with name '" + firstname + "' Not Found !");
-			}
-		} catch (Exception ex) {
-			System.out.printf("Exception in getStudent: %s \n", ex.getMessage());
-		}
-		return student;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Set<Student> getMentorStudents(Mentor mentor) {
-		final Set<Student> studentSet = new HashSet<>();
-
-		final Query q = sessionFactory.getCurrentSession()
-				.createQuery("SELECT s FROM Mentor p JOIN p.students s WHERE p.id=:mentorId");
-		q.setParameter("mentorId", mentor.getId());
-
-		try {
-			studentSet.addAll((List<Student>) q.list());
-		} catch (Exception ex) {
-			System.out.printf("Exception in getMentorStudents: %s \n", ex.getMessage());
-		}
-
-		return studentSet;
-	}
-
-	@Override
 	public List<Student> getAll() {
-
 		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+
+		System.out.println("************ ALL Students Get it!!!****************");
+
+		for (final Student detail : detailList) {
+			System.out.printf("*** Id:%s \t Name:%s \t Surname:%s \n", detail.getId(), detail.getName(),
+					detail.getSurname());
+		}
 
 		return detailList;
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
 	@Override
 	public Student getById(long id) {
+
 		Student student = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE id=:id").setParameter("id", id);
@@ -99,7 +52,22 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public void deleteStudent(long id) {
+	public void saveOrUpdate(String name, String surname, String description, String email, User user) {
+
+		final Student student = new Student(name, surname, description, email, user);
+		saveOrUpdate(student);
+	}
+
+	@Override
+	public void saveOrUpdate(Student student) {
+		
+		new PersistenceOperations().saveOrUpdate(sessionFactory, student,
+		"*** Student '" + student.getName() + "' saved!");
+	}
+
+	@Override
+	public void delete(long id) {
+
 		Student student = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Student WHERE id=:id").setParameter("id",
@@ -110,9 +78,8 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (Exception ex) {
 			System.out.printf("Exception in deleteStudent: %s \n", ex.getMessage());
 		}
-		
+
 		q.executeUpdate();
 	}
-
 
 }

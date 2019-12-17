@@ -8,17 +8,15 @@ import net.andreea.MyInterns.persistance.entity.User;
 
 public interface UserDao {
 
-	void readAll();
-
-	void delete(long id);
-
-	User getUser(final String username, final String password);
-
 	List<User> getAll();
-
-	void saveOrUpdate(String username, String password, Boolean isMentor);
 
 	User getById(long id);
 
+	void saveOrUpdate(String username, String password, Boolean isMentor);
+
+	void saveOrUpdate(String username, String password);
+
 	void saveOrUpdate(final User user);
+
+	void delete(long id);
 }

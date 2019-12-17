@@ -37,10 +37,10 @@ public class UserController {
 	@Produces({ MediaType.APPLICATION_JSON})
 	public User getById(@PathParam("id") int id) {
 		
-		User student = userDao.getById(id);
-		System.out.println(student);
+		User user = userDao.getById(id);
+		System.out.println(user);
 
-		return student;
+		return user;
 	}
 	
 	@PUT
@@ -72,7 +72,4 @@ public class UserController {
 
 		return Response.ok(id).build();
 	}
-	
-	//many to many principal -> JsonManagedReference = chiar sub join table sau list
-	// la celalalt -> JsonBackReference - la cea cu map
 }

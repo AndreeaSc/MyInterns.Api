@@ -10,7 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "student")
@@ -21,25 +27,35 @@ public class Student {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	@Column(name = "firstname")
-	private String firstname;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "lastname")
-	private String lastname;
+	@Column(name = "surname")
+	private String surname;
 
 	@Column(name = "description")
 	private String description;
+	
+	@Column(name = "email")
+	private String email;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	private User user;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
+	@JsonBackReference
 	private Set<Mentor> mentors = new HashSet<>();
 
 	public Student() {
 	}
 
-	public Student(final String firstname, final String description, final String lastname) {
-		this.firstname = firstname;
+	public Student(String name, String surname, String description, String email, User user) {
+		this.name = name;
+		this.surname = surname;
 		this.description = description;
-		this.lastname = lastname;
+		this.email = email;
+		this.user = user;
 	}
 
 	@Override
@@ -53,21 +69,44 @@ public class Student {
 		}
 
 		Student student = (Student) o;
-		return Objects.equals(firstname, student.firstname);
+		return Objects.equals(name, student.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstname);
+		return Objects.hash(name);
 	}
 
-	// Getters and setters
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(final Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getDescription() {
@@ -78,6 +117,12 @@ public class Student {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", surname=" + surname + ", description=" + description
+				+ ", email=" + email + ", user=" + user + ", mentors=" + mentors.size() + "]";
+	}
+
 	Set<Mentor> getMentors() {
 		return mentors;
 	}
@@ -86,25 +131,11 @@ public class Student {
 		this.mentors = mentors;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public User getUser() {
+		return user;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", description="
-				+ description + ", mentors=" + mentors + "]";
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

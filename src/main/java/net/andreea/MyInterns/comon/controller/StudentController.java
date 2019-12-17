@@ -22,7 +22,7 @@ import net.andreea.MyInterns.persistance.entity.Student;
 
 @Path("/student")
 public class StudentController {
-	
+
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	StudentDao studentDao = appContext.getBean(StudentDao.class);
 
@@ -36,9 +36,9 @@ public class StudentController {
 
 	@GET
 	@Path("/getBy/{id}")
-	@Produces({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Student getById(@PathParam("id") int id) {
-		
+
 		Student student = studentDao.getById(id);
 		System.out.println(student);
 
@@ -54,7 +54,7 @@ public class StudentController {
 
 		return Response.ok(student).build();
 	}
-	
+
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -64,13 +64,13 @@ public class StudentController {
 
 		return Response.ok(student).build();
 	}
-	
+
 	@DELETE
 	@Path("/delete/{id}")
-	@Produces({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response delete(@PathParam("id") int id) {
 
-		studentDao.deleteStudent(id);
+		studentDao.delete(id);
 
 		return Response.ok(id).build();
 	}
