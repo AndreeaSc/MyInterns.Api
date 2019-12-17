@@ -2,6 +2,7 @@ package net.andreea.MyInterns.persistance.entity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,10 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "mentor")
 public class Mentor {
@@ -25,31 +30,45 @@ public class Mentor {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
-	@Column(name = "firstname")
-	private String firstName;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "lastname")
-	private String lastName;
+	@Column(name = "surname")
+	private String surname;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "qualification")
+	private String qualification;
+	
+	@Column(name = "isExternal")
+	private Boolean isExternal;
 
 	@OneToOne(fetch = FetchType.LAZY)  
 	@MapsId
 	private User user;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
-	@JoinTable(name = "mentor_student_matrix", joinColumns = @JoinColumn(name = "mentor_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	@JoinTable(name = "mentors_students", joinColumns = @JoinColumn(name = "mentor_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	@JsonManagedReference
 	private Set<Student> students = new LinkedHashSet<>();
-
+	
 	public Mentor() {
 	}
 
-	public Mentor(final String firstName, final String lastName, User user) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Mentor(String name, String surname, String email, String qualification, Boolean isExternal, User user) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.qualification = qualification;
+		this.isExternal = isExternal;
 		this.user = user;
 	}
 
 	public void addStudent(Student student) {
-		System.out.printf("Adding student '%s' to '%s' \n", student.getFirstname(), this.firstName);
+		System.out.printf("Adding student '%s' to '%s' \n", student.getName(), this.name);
 		students.add(student);
 		student.getMentors().add(this);
 	}
@@ -80,20 +99,44 @@ public class Mentor {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(final String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setLastName(final String lastName) {
-		this.lastName = lastName;
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public Boolean getIsExternal() {
+		return isExternal;
+	}
+
+	public void setIsExternal(Boolean isExternal) {
+		this.isExternal = isExternal;
 	}
 
 	public User getUser() {
@@ -103,4 +146,10 @@ public class Mentor {
 	void setUser(final User user) {
 		this.user = user;
 	}
+
+	@Override
+	public String toString() {
+		return "Mentor [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", qualification="
+				+ qualification + ", isExternal=" + isExternal + ", user=" + user + ", students=" + students.size() + "]";
+	}	
 }

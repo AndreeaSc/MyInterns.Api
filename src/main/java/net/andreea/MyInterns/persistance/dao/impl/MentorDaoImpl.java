@@ -6,7 +6,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,60 +25,15 @@ public class MentorDaoImpl implements MentorDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void saveOrUpdate(final Mentor mentor) {
-		new PersistenceOperations().saveOrUpdate(sessionFactory, mentor,
-				"*** Mentor '" + mentor.getFirstName() + "' saved!");
-	}
+	public List<Mentor> getAll() {
 
-	@Override
-	public void saveOrUpdateIfMentor(final User user, final Mentor mentor) {
-		if (user.getIsMentor() == true) {
-			new PersistenceOperations().saveOrUpdate(sessionFactory, mentor,
-					"*** Mentor '" + mentor.getFirstName() + "' saved!");
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void readAll() {
-		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
-
-		System.out.println("************ ALL MENTORSs ****************");
-
-		for (final Mentor detail : detailList) {
-			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
-					detail.getLastName());
-		}
-	}
-
-	@Override
-	public Mentor getMentor(final User user) {
-		final Query q = sessionFactory.getCurrentSession().createQuery("FROM Mentor WHERE user=:user");
-		q.setParameter("user", user);
-
-		Mentor mentor = null;
-
-		try {
-			mentor = (Mentor) q.uniqueResult();
-			if (mentor == null) {
-				System.out.println("Mentor with username '" + user.getUsername() + "' Not Found !");
-			}
-		} catch (Exception ex) {
-			System.out.printf("Exception in getMentor: %s \n", ex.getMessage());
-		}
-
-		return mentor;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Mentor> getAllMentors() {
 		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
 
 		System.out.println("************ ALL MENTORSs Get it!!!****************");
 
 		for (final Mentor detail : detailList) {
-			System.out.printf("*** Id:%s \t Firstname:%s \t Lastname:%s \n", detail.getId(), detail.getFirstName(),
-					detail.getLastName());
+			System.out.printf("*** Id:%s \t Name:%s \t Surname:%s \n", detail.getId(), detail.getName(),
+					detail.getSurname());
 		}
 
 		return detailList;
@@ -87,9 +41,10 @@ public class MentorDaoImpl implements MentorDao {
 
 	@Override
 	public Mentor getById(int id) {
-
+		
 		final ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		MentorDao mentorDao = appContext.getBean(MentorDao.class);
+
 		List<Mentor> mentors = new ArrayList<Mentor>();
 
 		mentors = mentorDao.getAll();
@@ -102,15 +57,34 @@ public class MentorDaoImpl implements MentorDao {
 		return null;
 	}
 
-	
-	
-
 	@Override
-	public List<Mentor> getAll() {
-
-		final List<Mentor> detailList = sessionFactory.getCurrentSession().createCriteria(Mentor.class).list();
-
-		return detailList;
+	public void saveOrUpdate(String name, String surname, String email, String qualification, Boolean isExternal,
+			User user) {
+		
+		final Mentor mentor = new Mentor(name, surname, email, qualification, isExternal, user);
+		saveOrUpdate(mentor);
 	}
 
+	@Override
+	public void saveOrUpdate(Mentor mentor) {
+		new PersistenceOperations().saveOrUpdate(sessionFactory, mentor,
+		"*** Student '" + mentor.getName() + "' saved!");
+	}
+
+	@Override
+	public void delete(long id) {
+		
+		Mentor mentor = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Mentor WHERE id=:id").setParameter("id",
+				id);
+
+		try {
+			mentor = (Mentor) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteMentor: %s \n", ex.getMessage());
+		}
+
+		q.executeUpdate();
+	}
 }

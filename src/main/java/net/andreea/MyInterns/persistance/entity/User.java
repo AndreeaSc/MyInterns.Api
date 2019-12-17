@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -22,40 +24,27 @@ public class User {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "email")
-	private String email;
-
 	@Column(name = "password")
 	private String password;
 
 	@Column(name = "isMentor")
 	private Boolean isMentor;
-	
-	@OneToOne(mappedBy = "user", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.PERSIST }, orphanRemoval = true, fetch = FetchType.LAZY)	
+
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Student student;
+
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Mentor mentor;
 
-	public String getEmail() {
-		return email;
+	public User() {	}
+
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Boolean getIsMentor() {
-		return isMentor;
-	}
-
-	public void setIsMentor(Boolean isMentor) {
-		this.isMentor = isMentor;
-	}
-
-	public User() {
-	}
-
-	public User(final String email, final String password, final Boolean isMentor) {
-		this.email = email;
+	public User(String username, String password, Boolean isMentor) {
+		this.username = username;
 		this.password = password;
 		this.isMentor = isMentor;
 	}
@@ -84,11 +73,34 @@ public class User {
 		this.password = password;
 	}
 
+	public Boolean getIsMentor() {
+		return isMentor;
+	}
+
+	public void setIsMentor(Boolean isMentor) {
+		this.isMentor = isMentor;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(final Student student) {
+		if (student == null) {
+			if (this.student != null) {
+				this.student.setUser(null);
+			}
+		} else {
+			student.setUser(this);
+		}
+		this.student = student;
+	}
+
 	public Mentor getMentor() {
 		return mentor;
 	}
 
-	public void setMentor(final Mentor mentor) {
+	public void setMentor(Mentor mentor) {
 		if (mentor == null) {
 			if (this.mentor != null) {
 				this.mentor.setUser(null);
@@ -97,5 +109,11 @@ public class User {
 			mentor.setUser(this);
 		}
 		this.mentor = mentor;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isMentor=" + isMentor
+				+ ", student=" + student + ", mentor=" + mentor + "]";
 	}
 }
