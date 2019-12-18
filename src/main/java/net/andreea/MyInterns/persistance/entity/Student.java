@@ -3,6 +3,7 @@ package net.andreea.MyInterns.persistance.entity;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "student")
@@ -41,6 +41,7 @@ public class Student {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
+	@JsonIgnore
 	private User user;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "students")
@@ -120,7 +121,7 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", name=" + name + ", surname=" + surname + ", description=" + description
-				+ ", email=" + email + ", user=" + user + ", mentors=" + mentors.size() + "]";
+				+ ", email=" + email + ", mentors=" + mentors.size() + "]";
 	}
 
 	Set<Mentor> getMentors() {
@@ -129,10 +130,6 @@ public class Student {
 
 	public void setMentors(final Set<Mentor> mentors) {
 		this.mentors = mentors;
-	}
-
-	public User getUser() {
-		return user;
 	}
 
 	public void setUser(User user) {

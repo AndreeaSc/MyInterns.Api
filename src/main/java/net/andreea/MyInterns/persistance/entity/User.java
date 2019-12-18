@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -81,10 +81,6 @@ public class User {
 		this.isMentor = isMentor;
 	}
 
-	public Student getStudent() {
-		return student;
-	}
-
 	public void setStudent(final Student student) {
 		if (student == null) {
 			if (this.student != null) {
@@ -94,10 +90,6 @@ public class User {
 			student.setUser(this);
 		}
 		this.student = student;
-	}
-
-	public Mentor getMentor() {
-		return mentor;
 	}
 
 	public void setMentor(Mentor mentor) {
@@ -113,7 +105,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isMentor=" + isMentor
-				+ ", student=" + student + ", mentor=" + mentor + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isMentor=" + isMentor;
 	}
 }

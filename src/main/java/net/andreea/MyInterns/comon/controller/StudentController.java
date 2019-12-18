@@ -1,8 +1,6 @@
 package net.andreea.MyInterns.comon.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,9 +12,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.mysql.cj.xdevapi.SessionFactory;
+
+import net.andreea.MyInterns.comon.StudentDTO;
 import net.andreea.MyInterns.persistance.dao.StudentDao;
 import net.andreea.MyInterns.persistance.entity.Student;
 
@@ -25,13 +27,13 @@ public class StudentController {
 
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	StudentDao studentDao = appContext.getBean(StudentDao.class);
-
+	
 	@GET
 	@Path("/students")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Student> getList() {
 
-		return studentDao.getAll();
+		return studentDao.displayStudent();
 	}
 
 	@GET

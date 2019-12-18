@@ -17,6 +17,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -35,25 +36,27 @@ public class Mentor {
 
 	@Column(name = "surname")
 	private String surname;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "qualification")
 	private String qualification;
-	
+
 	@Column(name = "isExternal")
 	private Boolean isExternal;
 
-	@OneToOne(fetch = FetchType.LAZY)  
+	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
+	@JsonIgnore
 	private User user;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.PERSIST })
 	@JoinTable(name = "mentors_students", joinColumns = @JoinColumn(name = "mentor_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	@JsonManagedReference
 	private Set<Student> students = new LinkedHashSet<>();
-	
+
 	public Mentor() {
 	}
 
@@ -139,10 +142,6 @@ public class Mentor {
 		this.isExternal = isExternal;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
 	void setUser(final User user) {
 		this.user = user;
 	}
@@ -150,6 +149,6 @@ public class Mentor {
 	@Override
 	public String toString() {
 		return "Mentor [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", qualification="
-				+ qualification + ", isExternal=" + isExternal + ", user=" + user + ", students=" + students.size() + "]";
-	}	
+				+ qualification + ", isExternal=" + isExternal + ", students=" + students.size() + "]";
+	}
 }
