@@ -24,6 +24,7 @@ public class MentorDaoImpl implements MentorDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Mentor> getAll() {
 
@@ -41,7 +42,7 @@ public class MentorDaoImpl implements MentorDao {
 
 	@Override
 	public Mentor getById(int id) {
-		
+
 		final ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		MentorDao mentorDao = appContext.getBean(MentorDao.class);
 
@@ -60,7 +61,7 @@ public class MentorDaoImpl implements MentorDao {
 	@Override
 	public void saveOrUpdate(String name, String surname, String email, String qualification, Boolean isExternal,
 			User user) {
-		
+
 		final Mentor mentor = new Mentor(name, surname, email, qualification, isExternal, user);
 		saveOrUpdate(mentor);
 	}
@@ -68,12 +69,12 @@ public class MentorDaoImpl implements MentorDao {
 	@Override
 	public void saveOrUpdate(Mentor mentor) {
 		new PersistenceOperations().saveOrUpdate(sessionFactory, mentor,
-		"*** Student '" + mentor.getName() + "' saved!");
+				"*** Student '" + mentor.getName() + "' saved!");
 	}
 
 	@Override
 	public void delete(long id) {
-		
+
 		Mentor mentor = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Mentor WHERE id=:id").setParameter("id",

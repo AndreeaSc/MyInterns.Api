@@ -86,12 +86,12 @@
 			<version>1.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.owlike/genson -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.owlike</groupId> -->
-<!-- 			<artifactId>genson</artifactId> -->
-<!-- 			<version>1.6</version> -->
-<!-- 		</dependency> -->
-		
+		<!-- <dependency> -->
+		<!-- <groupId>com.owlike</groupId> -->
+		<!-- <artifactId>genson</artifactId> -->
+		<!-- <version>1.6</version> -->
+		<!-- </dependency> -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>

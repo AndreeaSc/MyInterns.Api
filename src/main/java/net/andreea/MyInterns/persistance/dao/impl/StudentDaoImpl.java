@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class StudentDaoImpl implements StudentDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Student> getAll() {
 		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
@@ -33,6 +35,21 @@ public class StudentDaoImpl implements StudentDao {
 		}
 
 		return detailList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Student> displayStudent(){
+		Session session = this.sessionFactory.openSession();
+		List<Student> result = null;
+		try {
+		
+		 result = session.createQuery("FROM Student").list();
+		
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		return result;
 	}
 
 	@Override
@@ -60,9 +77,9 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public void saveOrUpdate(Student student) {
-		
+
 		new PersistenceOperations().saveOrUpdate(sessionFactory, student,
-		"*** Student '" + student.getName() + "' saved!");
+				"*** Student '" + student.getName() + "' saved!");
 	}
 
 	@Override
