@@ -1,8 +1,10 @@
-import org.springframework.beans.BeanUtils;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import net.andreea.MyInterns.comon.StudentDTO;
+import net.andree.MyInterns.common.dto.StudentDTO;
 import net.andreea.MyInterns.persistance.dao.StudentDao;
 import net.andreea.MyInterns.persistance.dao.UserDao;
 import net.andreea.MyInterns.persistance.entity.Student;
@@ -21,10 +23,17 @@ public class Application {
 		userDao.saveOrUpdate(user);		
 		Student student = new Student("sch", "and", "des", "email", user);
 		
-		StudentDTO studentDTO = new StudentDTO(student.getName());
-
-		System.out.println("DTO:" + studentDTO.getName());
+		final User user1 = new User("roxana", "passw20rd");
+		userDao.saveOrUpdate(user);		
+		Student student1 = new Student("schiau", "andreea", "des", "email", user);
 		
-		System.out.println("The list: " + studentDao.getAll());
+		List<Student> students = new ArrayList<>();
+		students.add(student1);
+		students.add(student);
+				
+		StudentDTO studentDTO = new StudentDTO(student.getName());
+		System.out.println("DTO:" + studentDTO.getName());	
+		
+		System.out.println("The list: " + students);		
 	}
 }

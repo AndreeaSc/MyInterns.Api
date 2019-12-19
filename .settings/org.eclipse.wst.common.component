@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="MyInterns-commons-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/MyInterns-commons/MyInterns-commons">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="MyInterns8"/>
         <property name="java-output-path" value="/MyInterns8/target/classes"/>
     </wb-module>
