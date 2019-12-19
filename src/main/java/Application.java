@@ -5,35 +5,39 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import net.andree.MyInterns.common.dto.StudentDTO;
-import net.andreea.MyInterns.persistance.dao.StudentDao;
-import net.andreea.MyInterns.persistance.dao.UserDao;
-import net.andreea.MyInterns.persistance.entity.Student;
-import net.andreea.MyInterns.persistance.entity.User;
+import net.andree.MyInterns.common.dto.UserDTO;
+import net.myinterns.business.UserManager;
 
 public class Application {
 
 	public static void main(String[] args) {
 
 		final ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		final ApplicationContext appContextDTO = new ClassPathXmlApplicationContext("applicationContextDto.xml");
 		
-		UserDao userDao = appContext.getBean(UserDao.class);
-		StudentDao studentDao = appContext.getBean(StudentDao.class);
+//		UserDao userDao = appContext.getBean(UserDao.class);
+//		StudentDao studentDao = appContext.getBean(StudentDao.class);
 		
-		final User user = new User("andreea98", "passw20rd");
-		userDao.saveOrUpdate(user);		
-		Student student = new Student("sch", "and", "des", "email", user);
+//		StudentManager studentManager = appContext.getBean(StudentManager.class);
+		UserManager userManager = appContextDTO.getBean(UserManager.class);
 		
-		final User user1 = new User("roxana", "passw20rd");
-		userDao.saveOrUpdate(user);		
-		Student student1 = new Student("schiau", "andreea", "des", "email", user);
+		final UserDTO userDTO = new UserDTO("vioricaS", "passw20rd");
 		
-		List<Student> students = new ArrayList<>();
-		students.add(student1);
-		students.add(student);
-				
-		StudentDTO studentDTO = new StudentDTO(student.getName());
-		System.out.println("DTO:" + studentDTO.getName());	
+//		userManager.getAll();
+//		userManager.saveOrUpdate(userDTO);
+//		StudentDTO studentDTO = new StudentDTO("marina", "balerina", "des", "email", userDTO);
+//		
+//		final UserDTO userDTO1 = new UserDTO("traian", "passw20rd");
+//		userManager.saveOrUpdate(userDTO1);
+//		StudentDTO studentDTO1 = new StudentDTO("petru", "andrei", "des", "email", userDTO1);
+//
+//		
+//		List<StudentDTO> students = new ArrayList<>();
+//		students.add(studentDTO);
+//		students.add(studentDTO1);
 		
-		System.out.println("The list: " + students);		
+		System.out.println(userDTO.getPassword());
+		
+		System.out.println("The list: ");
 	}
 }

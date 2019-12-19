@@ -1,11 +1,11 @@
-package net.myinterns.business;
+package net.andreea.MyInterns.persistance.dao;
 
 import java.util.List;
 
 import net.andree.MyInterns.common.dto.StudentDTO;
 import net.andree.MyInterns.common.dto.UserDTO;
 
-public interface StudentManager {
+public interface StudentDao {
 
 	List<StudentDTO> getAll();
 
