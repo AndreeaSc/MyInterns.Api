@@ -8,13 +8,13 @@ public interface UserManager {
 	
 	List<UserDTO> getAll();
 
-	UserDTO getById(long id);
+	UserDTO getById(int id);
 
-	void saveOrUpdate(String username, String password, Boolean isMentor);
+	void saveOrUpdate(final String username, final String password, final Boolean isMentor);
 
-	void saveOrUpdate(String username, String password);
+	void saveOrUpdate(final String username, final String password);
 
 	void saveOrUpdate(final UserDTO userDTO);
 
-	void delete(long id);
+	void delete(int id);
 }
