@@ -2,7 +2,7 @@ package net.myinterns.business;
 
 import java.util.List;
 
-import net.andreea.MyInterns.persistance.entity.User;
+import net.myinterns.persistance.entity.User;
 
 public interface MentorManager {
 	
