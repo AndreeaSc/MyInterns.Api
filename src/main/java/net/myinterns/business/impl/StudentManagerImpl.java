@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import net.andree.MyInterns.common.dto.StudentDTO;
 import net.andree.MyInterns.common.dto.UserDTO;
-import net.andreea.MyInterns.persistance.dao.StudentDao;
 import net.myinterns.business.StudentManager;
+import net.myinterns.persistance.dao.StudentDao;
 
 @Repository
 public class StudentManagerImpl implements StudentManager {

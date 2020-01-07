@@ -7,17 +7,16 @@
 
 	<!-- Jersey Servlet configurations -->
 	<servlet>
-		<servlet-name>Jersey REST Service</servlet-name>
+		<servlet-name>ServletAdaptor</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value> net.andreea.MyInterns.comon.controller
-			</param-value>
+			<param-value>net.myinterns.common.controller</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Jersey REST Service</servlet-name>
+		<servlet-name>ServletAdaptor</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<!-- Jersey Servlet configurations -->
