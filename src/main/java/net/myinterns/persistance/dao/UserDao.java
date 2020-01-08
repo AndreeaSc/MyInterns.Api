@@ -11,11 +11,15 @@ public interface UserDao {
 
 	User getById(int id);
 
+	User getUser(final String username, final String password);
+
 	void saveOrUpdate(String username, String password, Boolean isMentor);
 
 	void saveOrUpdate(String username, String password);
 
 	void saveOrUpdate(final User user);
-	
+
 	void delete(int id);
+
+	User loginCheck(String userName, String password);
 }
