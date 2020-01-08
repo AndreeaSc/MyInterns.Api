@@ -58,10 +58,25 @@ public class UserController {
 
 	@POST
 	@Path("/add")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public UserDTO add(UserDTO userDTO) {
+	@Produces({ MediaType.APPLICATION_JSON})
+	public UserDTO add(String user) {
 
-		return userManager.saveOrUpdate(userDTO);
+//		return userManager.saveOrUpdate(userDTO);
+		
+		JSONObject jsonObj;
+
+		try {
+			jsonObj = new JSONObject(user);
+			String username = jsonObj.getString("username");
+			String password = jsonObj.getString("password");
+
+			return userManager.saveOrUpdate(username, password);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+
 	}
 
 	@DELETE
