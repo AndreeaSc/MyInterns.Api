@@ -76,10 +76,34 @@ public class UserController {
 		return Response.ok(id).build();
 	}
 
+//	@POST
+//	@Path("/login")
+//	@Produces({ MediaType.APPLICATION_JSON })
+//	public Response login(String user) {
+//
+//		JSONObject jsonObj;
+//
+//		try {
+//			jsonObj = new JSONObject(user);
+//			String username = jsonObj.getString("username");
+//			String password = jsonObj.getString("password");
+//
+//			if (userManager.login(username, password) != null) {
+//
+//				return Response.ok(username).build();
+//			} else
+//				return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for user: " + user).build();
+//
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for user: " + user).build();
+//		}
+//	}
+	
 	@POST
 	@Path("/login")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response login(String user) {
+	public UserDTO login(String user) {
 
 		JSONObject jsonObj;
 
@@ -88,15 +112,11 @@ public class UserController {
 			String username = jsonObj.getString("username");
 			String password = jsonObj.getString("password");
 
-			if (userManager.login(username, password) != null) {
-
-				return Response.ok(username).build();
-			} else
-				return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for user: " + user).build();
+			return userManager.login(username, password);
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for user: " + user).build();
+			return null;
 		}
 	}
 }
