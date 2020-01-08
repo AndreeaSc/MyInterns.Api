@@ -9,30 +9,27 @@ import org.springframework.stereotype.Repository;
 import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.UserManager;
 import net.myinterns.persistance.dao.UserDao;
+import net.myinterns.persistance.entity.User;
 
 @Repository
 public class UserManagerImpl implements UserManager {
 
-//	@Autowired
-//	private UserDao userDao;
-	
 	final ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	UserDao userDao = appContext.getBean(UserDao.class);
-	
+
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+
 	@Override
 	public List<UserDTO> getAll() {
 
 		if (null == userDao) {
-			System.out.println("user dao null");		}
+			System.out.println("user dao null");
+		}
 
 		return userDao.getAll();
 	}
-
-	
 
 	@Override
 	public UserDTO getById(int id) {
@@ -41,34 +38,67 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void saveOrUpdate(final String username, final String password, final Boolean isMentor) {
+	public UserDTO saveOrUpdate(final String username, final String password, final Boolean isMentor) {
 
 		userDao.saveOrUpdate(username, password, isMentor);
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUsername(username);
+		userDTO.setPassword(password);
+		userDTO.setIsMentor(isMentor);
+		
+		return userDTO;
 	}
 
 	@Override
-	public void saveOrUpdate(final String username, final String password) {
+	public UserDTO saveOrUpdate(final String username, final String password) {
 
 		userDao.saveOrUpdate(username, password);
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUsername(username);
+		userDTO.setPassword(password);
+
+		return userDTO;
 	}
 
 	@Override
-	public void saveOrUpdate(final UserDTO userDTO) {
-
-//		userDTO.setIsMentor(userDTO.getIsMentor());
-//		userDTO.setPassword(userDTO.getPassword());
-//		userDTO.setUsername(userDTO.getUsername());
+	public UserDTO saveOrUpdate(final UserDTO userDTO) {
 
 		String password = userDTO.getPassword();
 		String username = userDTO.getUsername();
 		Boolean isMentor = userDTO.getIsMentor();
 
 		saveOrUpdate(password, username, isMentor);
+				
+		return userDTO;
 	}
 
 	@Override
 	public void delete(int id) {
 
 		userDao.delete(id);
+	}
+
+	@Override
+	public UserDTO login(String username, String password) {
+		try {
+			User userObj = userDao.getUser(username, password);
+
+			if (userObj.getUsername() != null) {
+				UserDTO userDTO = new UserDTO();
+				userDTO.setUsername(userObj.getUsername());
+
+				return userDTO;
+
+			} else {
+				System.out.println("The username or the password is incorrect!");
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

@@ -7,10 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.andree.MyInterns.common.dto.UserDTO;
@@ -22,25 +19,27 @@ import net.myinterns.persistance.entity.User;
 @Transactional
 public class UserDaoImpl implements UserDao {
 
+	static Session sessionObj;
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public List<UserDTO> getAll() {
-		
+
 		final List<User> userList = sessionFactory.getCurrentSession().createCriteria(User.class).list();
 
 		final List<UserDTO> userDTOList = new ArrayList<UserDTO>();
 
-		for(User user : userList) {
-			userDTOList.add(new UserDTO(user.getUsername(),user.getPassword(), user.getIsMentor()));
+		for (User user : userList) {
+			userDTOList.add(new UserDTO(user.getUsername(), user.getPassword(), user.getIsMentor()));
 		}
-		
+
 		return userDTOList;
 	}
 
 	@Override
-	public User getById(int id) { 
+	public User getById(int id) {
 
 		User user = null;
 
@@ -81,10 +80,76 @@ public class UserDaoImpl implements UserDao {
 		final User user = new User(username, password);
 		saveOrUpdate(user);
 	}
-	
+
 	@Override
 	public void saveOrUpdate(User user) {
-		
+
 		new PersistanceOperations().saveOrUpdate(sessionFactory, user, "*** User '" + user.getUsername() + "' saved!");
+	}
+
+	@Override
+	public User loginCheck(String username, String password) {
+
+		User userObj = null;
+		try {
+			System.out.println("finding user");
+
+			// getting session object from session factory
+			sessionObj = this.sessionFactory.openSession();
+			// getting transaction object from session object
+			sessionObj.beginTransaction();
+
+			userObj = getUser(username, password);
+			System.out.println("Start search");
+			System.out.println(userObj);
+			if (userObj.getUsername().equals(username) && userObj != null) {
+
+				System.out.println("Correct username");
+				System.out.println(userObj.toString());
+
+				if (userObj.getPassword().equals(password)) {
+					System.out.println("Well done!");
+					return userObj;
+				} else {
+					System.out.println("Wrong password");
+					return null;
+				}
+
+			} else {
+				System.out.println("Wrong username or wrong password");
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			if (sessionObj.getTransaction() != null) {
+				sessionObj.getTransaction().rollback();
+			}
+			return null;
+		} finally {
+			if (sessionObj != null) {
+				sessionObj.close();
+			}
+		}
+	}
+
+	@Override
+	public User getUser(String username, String password) {
+		final Query q = sessionFactory.getCurrentSession()
+				.createQuery("FROM User WHERE username=:username AND password=:password");
+		q.setParameter("username", username);
+		q.setParameter("password", password);
+
+		User user = null;
+
+		try {
+			user = (User) q.uniqueResult();
+			if (user == null) {
+				System.out.println("User with username '" + username + "' Not Found !");
+			}
+		} catch (Exception ex) {
+			System.out.printf("Exception in getUser: %s \n", ex.getMessage());
+		}
+
+		return user;
 	}
 }
