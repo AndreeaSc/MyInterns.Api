@@ -33,7 +33,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO getById(int id) {
+		
 		userDao.getById(id);
+		
 		return new UserDTO();
 	}
 
@@ -75,7 +77,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(long id) {
 
 		userDao.delete(id);
 	}
@@ -96,7 +98,6 @@ public class UserManagerImpl implements UserManager {
 				return null;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 			return null;
 		}

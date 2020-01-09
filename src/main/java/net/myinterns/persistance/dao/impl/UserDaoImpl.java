@@ -55,16 +55,20 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(long id) {
+		User user = null;
 
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE id=:id").setParameter("id",
+				id);
 
-		UserDTO user = (UserDTO) session.load(UserDTO.class, id);
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteUser: %s \n", ex.getMessage());
+		}
 
-		session.delete(user);
+		q.executeUpdate();
 
-		session.getTransaction().commit();
 	}
 
 	@Override
