@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void saveOrUpdate(String username, String password, Boolean isMentor) {
+	public void saveOrUpdate(String username, String password, boolean isMentor) {
 
 		final User user = new User(username, password, isMentor);
 		saveOrUpdate(user);

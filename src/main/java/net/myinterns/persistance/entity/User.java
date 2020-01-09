@@ -35,7 +35,7 @@ public class User implements Serializable{
 	private String password;
 
 	@Column(name = "isMentor")
-	private Boolean isMentor;
+	private boolean isMentor;
 
 	@OneToOne(mappedBy = "user", cascade = {CascadeType.ALL }, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Student student;
@@ -50,7 +50,7 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public User(String username, String password, Boolean isMentor) {
+	public User(String username, String password, boolean isMentor) {
 		this.username = username;
 		this.password = password;
 		this.isMentor = isMentor;
@@ -80,11 +80,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public Boolean getIsMentor() {
+	public boolean getIsMentor() {
 		return isMentor;
 	}
 
-	public void setIsMentor(Boolean isMentor) {
+	public void setIsMentor(boolean isMentor) {
 		this.isMentor = isMentor;
 	}
 

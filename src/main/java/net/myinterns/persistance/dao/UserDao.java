@@ -13,7 +13,7 @@ public interface UserDao {
 
 	User getUser(final String username, final String password);
 
-	void saveOrUpdate(String username, String password, Boolean isMentor);
+	void saveOrUpdate(String username, String password, boolean isMentor);
 
 	void saveOrUpdate(String username, String password);
 

@@ -40,7 +40,7 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public UserDTO saveOrUpdate(final String username, final String password, final Boolean isMentor) {
+	public UserDTO saveOrUpdate(final String username, final String password, final boolean isMentor) {
 
 		userDao.saveOrUpdate(username, password, isMentor);
 		
