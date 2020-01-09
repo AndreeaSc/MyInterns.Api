@@ -16,7 +16,9 @@ public interface UserManager {
 
 	UserDTO saveOrUpdate(final UserDTO userDTO);
 
-	void delete(int id);
+	void delete(long id);
+
+	void deleteByUsername(String username);
 
 	UserDTO login(String username, String password);
 }

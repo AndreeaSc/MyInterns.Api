@@ -55,16 +55,19 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(long id) {
+		User user = null;
 
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE id=:id").setParameter("id",
+				id);
 
-		UserDTO user = (UserDTO) session.load(UserDTO.class, id);
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteUser: %s \n", ex.getMessage());
+		}
 
-		session.delete(user);
-
-		session.getTransaction().commit();
+		q.executeUpdate();
 	}
 
 	@Override
@@ -151,5 +154,21 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return user;
+	}
+
+	@Override
+	public void deleteByUsername(String username) {
+		User user = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE username=:username")
+				.setParameter("username", username);
+
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in deleteUserByUsername: %s \n", ex.getMessage());
+		}
+
+		q.executeUpdate();
 	}
 }

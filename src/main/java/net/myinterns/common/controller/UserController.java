@@ -58,11 +58,9 @@ public class UserController {
 
 	@POST
 	@Path("/add")
-	@Produces({ MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public UserDTO add(String user) {
 
-//		return userManager.saveOrUpdate(userDTO);
-		
 		JSONObject jsonObj;
 
 		try {
@@ -73,20 +71,29 @@ public class UserController {
 			return userManager.saveOrUpdate(username, password);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			return null;
 		}
 
 	}
 
-	@DELETE
+	@GET
 	@Path("/delete/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("id") long id) {
 
 		userManager.delete(id);
 
 		return Response.ok(id).build();
+	}
+	
+	@GET
+	@Path("/delete/user/{username}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response deleteByUsername(@PathParam("username") String username) {
+
+		userManager.deleteByUsername(username);
+
+		return Response.ok(username).build();
 	}
 
 	@POST
@@ -104,7 +111,6 @@ public class UserController {
 			return userManager.login(username, password);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			return null;
 		}
 	}

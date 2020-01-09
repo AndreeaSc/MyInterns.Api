@@ -19,7 +19,9 @@ public interface UserDao {
 
 	void saveOrUpdate(final User user);
 
-	void delete(int id);
+	void delete(long id);
+
+	void deleteByUsername(String username);
 
 	User loginCheck(String userName, String password);
 }
