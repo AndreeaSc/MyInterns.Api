@@ -67,8 +67,9 @@ public class UserController {
 			jsonObj = new JSONObject(user);
 			String username = jsonObj.getString("username");
 			String password = jsonObj.getString("password");
+			boolean isMentor = jsonObj.getBoolean("isMentor");
 
-			return userManager.saveOrUpdate(username, password);
+			return userManager.saveOrUpdate(username, password, isMentor);
 
 		} catch (Exception e) {
 			return null;
