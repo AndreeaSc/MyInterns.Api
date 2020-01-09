@@ -10,7 +10,7 @@ public interface UserManager {
 
 	UserDTO getById(int id);
 
-	UserDTO saveOrUpdate(final String username, final String password, final Boolean isMentor);
+	UserDTO saveOrUpdate(final String username, final String password, final boolean isMentor);
 
 	UserDTO saveOrUpdate(final String username, final String password);
 

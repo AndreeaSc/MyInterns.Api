@@ -73,7 +73,6 @@ public class UserController {
 		} catch (Exception e) {
 			return null;
 		}
-
 	}
 
 	@GET
