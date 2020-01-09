@@ -69,7 +69,7 @@ public class UserManagerImpl implements UserManager {
 
 		String password = userDTO.getPassword();
 		String username = userDTO.getUsername();
-		Boolean isMentor = userDTO.getIsMentor();
+		boolean isMentor = userDTO.getIsMentor();
 
 		saveOrUpdate(password, username, isMentor);
 				
