@@ -21,5 +21,7 @@ public interface UserDao {
 
 	void delete(long id);
 
+	void deleteByUsername(String username);
+
 	User loginCheck(String userName, String password);
 }

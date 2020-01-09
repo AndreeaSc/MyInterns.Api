@@ -18,5 +18,7 @@ public interface UserManager {
 
 	void delete(long id);
 
+	void deleteByUsername(String username);
+
 	UserDTO login(String username, String password);
 }

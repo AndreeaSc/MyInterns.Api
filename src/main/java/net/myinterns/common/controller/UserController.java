@@ -76,7 +76,7 @@ public class UserController {
 
 	}
 
-	@DELETE
+	@GET
 	@Path("/delete/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response delete(@PathParam("id") long id) {
@@ -84,6 +84,16 @@ public class UserController {
 		userManager.delete(id);
 
 		return Response.ok(id).build();
+	}
+	
+	@GET
+	@Path("/delete/user/{username}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response deleteByUsername(@PathParam("username") String username) {
+
+		userManager.deleteByUsername(username);
+
+		return Response.ok(username).build();
 	}
 
 	@POST
