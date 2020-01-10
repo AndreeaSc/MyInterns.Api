@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getById(int id) {
+	public User getById(long id) {
 
 		User user = null;
 
@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			user = (User) q.uniqueResult();
 		} catch (Exception ex) {
-			System.out.printf("Exception in getStudentbyId: %s \n", ex.getMessage());
+			System.out.printf("Exception in getUserById: %s \n", ex.getMessage());
 		}
 
 		return user;
@@ -170,5 +170,20 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		q.executeUpdate();
+	}
+
+	@Override
+	public User getByUsername(String username) {
+		User user = null;
+
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM User WHERE username=:username").setParameter("username", username);
+
+		try {
+			user = (User) q.uniqueResult();
+		} catch (Exception ex) {
+			System.out.printf("Exception in getUserByUsername: %s \n", ex.getMessage());
+		}
+
+		return user;
 	}
 }

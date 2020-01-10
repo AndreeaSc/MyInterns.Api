@@ -41,9 +41,17 @@ public class UserController {
 	@GET
 	@Path("/getBy/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public UserDTO getById(@PathParam("id") int id) {
+	public UserDTO getById(@PathParam("id") long id) {
 
 		return userManager.getById(id);
+	}
+	
+	@GET
+	@Path("/getByUsername/{username}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public UserDTO getById(@PathParam("username") String username) {
+
+		return userManager.getByUsername(username);
 	}
 
 	@PUT
