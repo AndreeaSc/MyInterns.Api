@@ -8,7 +8,7 @@ public interface UserManager {
 
 	List<UserDTO> getAll();
 
-	UserDTO getById(int id);
+	UserDTO getById(long id);
 
 	UserDTO saveOrUpdate(final String username, final String password, final boolean isMentor);
 
@@ -21,4 +21,6 @@ public interface UserManager {
 	void deleteByUsername(String username);
 
 	UserDTO login(String username, String password);
+
+	UserDTO getByUsername(String username);
 }

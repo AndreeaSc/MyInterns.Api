@@ -9,7 +9,9 @@ public interface UserDao {
 
 	List<UserDTO> getAll();
 
-	User getById(int id);
+	User getById(long id);
+
+	User getByUsername(String username);
 
 	User getUser(final String username, final String password);
 
