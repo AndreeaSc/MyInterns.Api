@@ -45,7 +45,7 @@ public class UserController {
 
 		return userManager.getById(id);
 	}
-	
+
 	@GET
 	@Path("/getByUsername/{username}")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -54,7 +54,7 @@ public class UserController {
 		return userManager.getByUsername(username);
 	}
 
-	@PUT
+	@GET
 	@Path("/update")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response update(UserDTO user) {
@@ -93,7 +93,7 @@ public class UserController {
 
 		return Response.ok(id).build();
 	}
-	
+
 	@GET
 	@Path("/delete/user/{username}")
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -106,8 +106,10 @@ public class UserController {
 
 	@POST
 	@Path("/login")
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public UserDTO login(String user) {
+
+		UserDTO userDTO = new UserDTO();
 
 		JSONObject jsonObj;
 
@@ -119,7 +121,7 @@ public class UserController {
 			return userManager.login(username, password);
 
 		} catch (Exception e) {
-			return null;
+			return userDTO;
 		}
 	}
 }
