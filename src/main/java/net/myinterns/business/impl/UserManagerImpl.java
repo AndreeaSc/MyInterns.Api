@@ -114,11 +114,14 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO login(String username, String password) {
+		
+		UserDTO userDTO = new UserDTO();
+		
 		try {
 			User userObj = userDao.getUser(username, password);
 
-			if (userObj.getUsername() != null) {
-				UserDTO userDTO = new UserDTO();
+			if (userObj != null && userObj.getUsername() != null) {
+
 				userDTO.setUsername(userObj.getUsername());
 
 				return userDTO;
@@ -129,7 +132,7 @@ public class UserManagerImpl implements UserManager {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return userDTO;
 		}
 	}
 }
