@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -176,7 +178,8 @@ public class UserDaoImpl implements UserDao {
 	public User getByUsername(String username) {
 		User user = null;
 
-		Query q = sessionFactory.getCurrentSession().createQuery("FROM User WHERE username=:username").setParameter("username", username);
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM User WHERE username=:username")
+				.setParameter("username", username);
 
 		try {
 			user = (User) q.uniqueResult();
@@ -185,5 +188,26 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return user;
+	}
+
+	@Override
+	public User update(User user,long id) {
+
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		User userUpdated = null;
+
+		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id))
+				.uniqueResult();
+		
+		userUpdated.setIsMentor(user.getIsMentor());
+		userUpdated.setUsername(user.getUsername());
+		userUpdated.setPassword(user.getPassword());
+		session.update(userUpdated);
+		tx.commit();
+		session.close();
+
+		return userUpdated;
 	}
 }

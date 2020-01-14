@@ -20,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.UserManager;
 import net.myinterns.persistance.dao.UserDao;
+import net.myinterns.persistance.entity.User;
 
 @Path("/user")
 public class UserController {
@@ -54,14 +55,31 @@ public class UserController {
 		return userManager.getByUsername(username);
 	}
 
-	@GET
-	@Path("/update")
+	@POST
+	@Path("/update/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response update(UserDTO user) {
+	public UserDTO update(@PathParam("id") long id, String user) {
 
-		userManager.saveOrUpdate(user);
+		JSONObject jsonObj;
 
-		return Response.ok(user).build();
+		try {
+			jsonObj = new JSONObject(user);
+			String username = jsonObj.getString("username");
+			String password = jsonObj.getString("password");
+			boolean isMentor = jsonObj.getBoolean("isMentor");
+
+			UserDTO userDTO = new UserDTO();
+			userDTO.setIsMentor(isMentor);
+			userDTO.setPassword(password);
+			userDTO.setUsername(username);
+
+			return userManager.update(userDTO, id);
+
+		} catch (Exception e) {
+			return null;
+		}
+
+//		return userManager.update(user, id);
 	}
 
 	@POST
