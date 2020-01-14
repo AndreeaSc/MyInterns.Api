@@ -36,7 +36,7 @@ public class UserManagerImpl implements UserManager {
 
 		User user = new User();
 		user = userDao.getById(id);
-		
+
 		UserDTO userDTO = new UserDTO();
 
 		userDTO.setUsername(user.getUsername());
@@ -48,9 +48,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO getByUsername(String username) {
-		
+
 		userDao.getByUsername(username);
-		
+
 		User user = new User();
 		user = userDao.getByUsername(username);
 
@@ -114,9 +114,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO login(String username, String password) {
-		
+
 		UserDTO userDTO = new UserDTO();
-		
+
 		try {
 			User userObj = userDao.getUser(username, password);
 
@@ -138,19 +138,37 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO update(UserDTO userDTO, long id) {
-	
+
 		User user = new User();
 		user.setIsMentor(userDTO.getIsMentor());
 		user.setPassword(userDTO.getPassword());
-		user.setUsername(userDTO.getUsername());		
+		user.setUsername(userDTO.getUsername());
 		User userUpdated = new User();
-		
+
 		userUpdated = userDao.update(user, id);
-		
+
 		userDTO.setIsMentor(userUpdated.getIsMentor());
 		userDTO.setPassword(userUpdated.getPassword());
 		userDTO.setUsername(userUpdated.getUsername());
+
+		return userDTO;
+	}
+
+	@Override
+	public UserDTO updateByUsername(UserDTO userDTO, String username) {
 		
+		User user = new User();
+		user.setIsMentor(userDTO.getIsMentor());
+		user.setPassword(userDTO.getPassword());
+		user.setUsername(userDTO.getUsername());
+		User userUpdated = new User();
+
+		userUpdated = userDao.updateByUsername(user, username);
+
+		userDTO.setIsMentor(userUpdated.getIsMentor());
+		userDTO.setPassword(userUpdated.getPassword());
+		userDTO.setUsername(userUpdated.getUsername());
+
 		return userDTO;
 	}
 }

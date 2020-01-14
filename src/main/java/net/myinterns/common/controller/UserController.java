@@ -78,8 +78,31 @@ public class UserController {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	@POST
+	@Path("/updateByUsername/{username}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public UserDTO update(@PathParam("username") String username, String user) {
 
-//		return userManager.update(user, id);
+		JSONObject jsonObj;
+
+		try {
+			jsonObj = new JSONObject(user);
+			String usernameUser = jsonObj.getString("username");
+			String passwordUser = jsonObj.getString("password");
+			boolean isMentorUser = jsonObj.getBoolean("isMentor");
+
+			UserDTO userDTO = new UserDTO();
+			userDTO.setIsMentor(isMentorUser);
+			userDTO.setPassword(passwordUser);
+			userDTO.setUsername(usernameUser);
+
+			return userManager.updateByUsername(userDTO, username);
+
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@POST
