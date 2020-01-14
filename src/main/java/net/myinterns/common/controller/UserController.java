@@ -55,6 +55,18 @@ public class UserController {
 		return userManager.getByUsername(username);
 	}
 
+	@GET
+	@Path("/getIdByUsername/{username}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public long getIdByUsername(@PathParam("username") String username) {
+
+		UserDTO userDTO = new UserDTO();
+		userDTO = userManager.getByUsername(username);
+
+		long id = userDTO.getId();
+		return id;
+	}
+
 	@POST
 	@Path("/update/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -66,12 +78,11 @@ public class UserController {
 			jsonObj = new JSONObject(user);
 			String username = jsonObj.getString("username");
 			String password = jsonObj.getString("password");
-			boolean isMentor = jsonObj.getBoolean("isMentor");
 
 			UserDTO userDTO = new UserDTO();
-			userDTO.setIsMentor(isMentor);
 			userDTO.setPassword(password);
 			userDTO.setUsername(username);
+			userDTO.setId(id);
 
 			return userManager.update(userDTO, id);
 
@@ -79,7 +90,7 @@ public class UserController {
 			return null;
 		}
 	}
-	
+
 	@POST
 	@Path("/updateByUsername/{username}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
