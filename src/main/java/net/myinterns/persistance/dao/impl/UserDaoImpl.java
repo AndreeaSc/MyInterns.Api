@@ -99,9 +99,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			System.out.println("finding user");
 
-			// getting session object from session factory
 			sessionObj = this.sessionFactory.openSession();
-			// getting transaction object from session object
 			sessionObj.beginTransaction();
 
 			userObj = getUser(username, password);
@@ -125,7 +123,6 @@ public class UserDaoImpl implements UserDao {
 				return null;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			if (sessionObj.getTransaction() != null) {
 				sessionObj.getTransaction().rollback();
 			}
@@ -200,9 +197,9 @@ public class UserDaoImpl implements UserDao {
 
 		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id)).uniqueResult();
 
-		userUpdated.setIsMentor(user.getIsMentor());
 		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
+		userUpdated.setId(user.getId());
 		session.update(userUpdated);
 		tx.commit();
 		session.close();
@@ -221,7 +218,6 @@ public class UserDaoImpl implements UserDao {
 		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("username", username))
 				.uniqueResult();
 
-		userUpdated.setIsMentor(user.getIsMentor());
 		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
 		session.update(userUpdated);

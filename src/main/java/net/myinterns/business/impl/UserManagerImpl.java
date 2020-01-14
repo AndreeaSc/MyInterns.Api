@@ -59,6 +59,7 @@ public class UserManagerImpl implements UserManager {
 		userDTO.setUsername(user.getUsername());
 		userDTO.setPassword(user.getPassword());
 		userDTO.setIsMentor(user.getIsMentor());
+		userDTO.setId(user.getId());
 
 		return userDTO;
 	}
@@ -140,16 +141,17 @@ public class UserManagerImpl implements UserManager {
 	public UserDTO update(UserDTO userDTO, long id) {
 
 		User user = new User();
-		user.setIsMentor(userDTO.getIsMentor());
 		user.setPassword(userDTO.getPassword());
 		user.setUsername(userDTO.getUsername());
+		user.setId(id);
+		
 		User userUpdated = new User();
 
 		userUpdated = userDao.update(user, id);
 
-		userDTO.setIsMentor(userUpdated.getIsMentor());
 		userDTO.setPassword(userUpdated.getPassword());
 		userDTO.setUsername(userUpdated.getUsername());
+		userDTO.setId(id);
 
 		return userDTO;
 	}
