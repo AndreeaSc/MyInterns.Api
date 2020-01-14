@@ -22,6 +22,8 @@ public interface UserDao {
 	void saveOrUpdate(final User user);
 
 	User update(User user, long id);
+	
+	User updateByUsername(User user, String username);
 
 	void delete(long id);
 

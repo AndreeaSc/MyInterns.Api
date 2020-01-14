@@ -191,16 +191,36 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User update(User user,long id) {
+	public User update(User user, long id) {
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
 		User userUpdated = null;
 
-		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id))
-				.uniqueResult();
+		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id)).uniqueResult();
+
+		userUpdated.setIsMentor(user.getIsMentor());
+		userUpdated.setUsername(user.getUsername());
+		userUpdated.setPassword(user.getPassword());
+		session.update(userUpdated);
+		tx.commit();
+		session.close();
+
+		return userUpdated;
+	}
+
+	@Override
+	public User updateByUsername(User user, String username) {
 		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		User userUpdated = null;
+
+		userUpdated = (User) session.createCriteria(User.class).add(Restrictions.eq("username", username))
+				.uniqueResult();
+
 		userUpdated.setIsMentor(user.getIsMentor());
 		userUpdated.setUsername(user.getUsername());
 		userUpdated.setPassword(user.getPassword());
