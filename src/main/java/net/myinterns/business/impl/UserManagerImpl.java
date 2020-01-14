@@ -135,4 +135,22 @@ public class UserManagerImpl implements UserManager {
 			return userDTO;
 		}
 	}
+
+	@Override
+	public UserDTO update(UserDTO userDTO, long id) {
+	
+		User user = new User();
+		user.setIsMentor(userDTO.getIsMentor());
+		user.setPassword(userDTO.getPassword());
+		user.setUsername(userDTO.getUsername());		
+		User userUpdated = new User();
+		
+		userUpdated = userDao.update(user, id);
+		
+		userDTO.setIsMentor(userUpdated.getIsMentor());
+		userDTO.setPassword(userUpdated.getPassword());
+		userDTO.setUsername(userUpdated.getUsername());
+		
+		return userDTO;
+	}
 }
