@@ -10,6 +10,7 @@ import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.StudentManager;
 import net.myinterns.persistance.dao.StudentDao;
 import net.myinterns.persistance.entity.Student;
+import net.myinterns.persistance.entity.User;
 
 @Repository
 public class StudentManagerImpl implements StudentManager {
@@ -20,7 +21,7 @@ public class StudentManagerImpl implements StudentManager {
 	public void setStudentDao(StudentDao studentDao) {
 		this.studentDao = studentDao;
 	}
-	
+
 	@Override
 	public List<StudentDTO> getAll() {
 
@@ -45,7 +46,7 @@ public class StudentManagerImpl implements StudentManager {
 
 	@Override
 	public StudentDTO saveOrUpdate(String name, String surname, String description, String email, UserDTO userDTO) {
-		
+
 		studentDao.saveOrUpdate(name, surname, description, email, userDTO);
 
 		StudentDTO studentDTO = new StudentDTO();
@@ -59,14 +60,14 @@ public class StudentManagerImpl implements StudentManager {
 
 	@Override
 	public StudentDTO saveOrUpdate(StudentDTO studentDTO) {
-	
+
 //		String name = studentDTO.getName();
 //		String surname = studentDTO.getSurname();
 //		String description = studentDTO.getDescription();
 //		String email = studentDTO.getDescription();
 //		
 //		studentDao.saveOrUpdate(name, surname, description, email);
-		
+
 		return null;
 	}
 
@@ -74,5 +75,25 @@ public class StudentManagerImpl implements StudentManager {
 	public void delete(long id) {
 
 		studentDao.delete(id);
+	}
+
+	public StudentDTO updateByEmail(StudentDTO studentDTO, String emailStatic) {
+
+		Student student = new Student();
+		student.setName(studentDTO.getName());
+		student.setSurname(studentDTO.getSurname());
+		student.setDescription(studentDTO.getDescription());
+		student.setEmail(studentDTO.getEmail());
+		
+		Student studentUpdate = new Student();
+
+		studentUpdate = studentDao.updateByEmail(student, emailStatic);
+
+		studentDTO.setName(student.getName());
+		studentDTO.setSurname(student.getSurname());
+		studentDTO.setDescription(student.getDescription());
+		studentDTO.setEmail(student.getEmail());
+
+		return studentDTO;
 	}
 }

@@ -13,10 +13,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import net.andree.MyInterns.common.dto.StudentDTO;
+import net.andree.MyInterns.common.dto.UserDTO;
 import net.andree.MyInterns.common.dto.StudentDTO;
 import net.myinterns.business.StudentManager;
 import net.myinterns.persistance.dao.StudentDao;
@@ -48,21 +51,44 @@ public class StudentController {
 		return studentManager.getById(id);
 	}
 
-	@PUT
-	@Path("/update")
+	@POST
+	@Path("/updateByEmail/{email}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response update(StudentDTO student) {
+	public Student update(@PathParam("email") String email, String student) {
+
+		JSONObject jsonObj;
+
+		try {
+			jsonObj = new JSONObject(student);
+			String name = jsonObj.getString("name");
+			String surname = jsonObj.getString("surname");
+			String description = jsonObj.getString("description");
+			String email1 = jsonObj.getString("email");
+
+			Student studentS = new Student();
+			studentS.setName(name);
+			studentS.setSurname(surname);
+			studentS.setDescription(description);
+			studentS.setEmail(email1);
+
+			System.out.println("Student updated as: " + studentS.toString());
+			
+			return studentDao.updateByEmail(studentS, email);
+
+		} catch (Exception e) {
+			return null;
+		}
 
 //		studentDao.saveOrUpdate(student);
 
-		return Response.ok(student).build();
+//		return Response.ok(student).build();
 	}
 
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response add(Student student) throws JSONException {
-		
+
 		studentDao.saveOrUpdateDAO(student);
 		return Response.ok(student).build();
 

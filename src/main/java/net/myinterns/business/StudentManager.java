@@ -16,5 +16,7 @@ public interface StudentManager {
 
 	StudentDTO saveOrUpdate(final StudentDTO studentDTO);
 
+	StudentDTO updateByEmail(StudentDTO studentDTO, String email);
+	
 	void delete(long id);
 }
