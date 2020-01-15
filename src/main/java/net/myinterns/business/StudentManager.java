@@ -11,10 +11,10 @@ public interface StudentManager {
 
 	StudentDTO getById(long id);
 
-	void saveOrUpdate(final String name, final String surname, final String description, final String email,
+	StudentDTO saveOrUpdate(final String name, final String surname, final String description, final String email,
 			final UserDTO userDTO);
 
-	void saveOrUpdate(final StudentDTO studentDTO);
+	StudentDTO saveOrUpdate(final StudentDTO studentDTO);
 
 	void delete(long id);
 }

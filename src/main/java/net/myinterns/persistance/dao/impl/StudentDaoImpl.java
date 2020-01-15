@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.andree.MyInterns.common.dto.StudentDTO;
+import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.PersistanceOperations;
 import net.myinterns.persistance.dao.StudentDao;
 import net.myinterns.persistance.entity.Student;
@@ -23,49 +25,62 @@ public class StudentDaoImpl implements StudentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Student> getAll() {
-		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+	public List<StudentDTO> getAll() {
+		
+		final List<StudentDTO> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
 
 		System.out.println("************ ALL Students Get it!!!****************");
 
-		for (final Student detail : detailList) {
+		for (final StudentDTO detail : detailList) {
 			System.out.printf("*** Id:%s \t Name:%s \t Surname:%s \n", detail.getId(), detail.getName(),
 					detail.getSurname());
 		}
 
 		return detailList;
 	}
-	
+
 	@Override
 	public Student getById(long id) {
 
-		Student studentDTO = null;
+		Student student = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE id=:id").setParameter("id", id);
 
 		try {
-			studentDTO = (Student) q.uniqueResult();
+			student = (Student) q.uniqueResult();
 		} catch (Exception ex) {
 			System.out.printf("Exception in getStudentbyId: %s \n", ex.getMessage());
 		}
 
-		return studentDTO;
+		return student;
 	}
 
 	@Override
-	public void saveOrUpdate(String name, String surname, String description, String email, User user) {
+	public void saveOrUpdate(String name, String surname, String description, String email, UserDTO user) {
 
-		final Student student = new Student(name, surname, description, email, user);
-		saveOrUpdate(student);
+		final StudentDTO studentDTO = new StudentDTO(name, surname, description, email, user);
+		saveOrUpdate(studentDTO);
 	}
 
 	@Override
-	public void saveOrUpdate(Student student) {
+	public void saveOrUpdate(StudentDTO studentDTO) {
+
+		new PersistanceOperations().saveOrUpdate(sessionFactory, studentDTO,
+				"*** Student '" + studentDTO.getName() + "' saved!");
+	}
+	
+	public void saveOrUpdateDAO(Student student) {
 
 		new PersistanceOperations().saveOrUpdate(sessionFactory, student,
 				"*** Student '" + student.getName() + "' saved!");
 	}
+	
+	public void saveOrUpdateDAO(String name, String surname, String description, String email, User user) {
 
+		final Student student = new Student(name, surname, description, email, user);
+		saveOrUpdateDAO(student);
+	}
+	
 	@Override
 	public void delete(long id) {
 
