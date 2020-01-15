@@ -24,10 +24,6 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public List<UserDTO> getAll() {
 
-		if (null == userDao) {
-			System.out.println("user dao null");
-		}
-
 		return userDao.getAll();
 	}
 

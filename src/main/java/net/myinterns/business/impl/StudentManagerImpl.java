@@ -9,6 +9,7 @@ import net.andree.MyInterns.common.dto.StudentDTO;
 import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.StudentManager;
 import net.myinterns.persistance.dao.StudentDao;
+import net.myinterns.persistance.entity.Student;
 
 @Repository
 public class StudentManagerImpl implements StudentManager {
@@ -16,36 +17,57 @@ public class StudentManagerImpl implements StudentManager {
 	@Autowired
 	StudentDao studentDao;
 
+	public void setStudentDao(StudentDao studentDao) {
+		this.studentDao = studentDao;
+	}
+	
 	@Override
 	public List<StudentDTO> getAll() {
-		
-		return null;
-//		return studentDao.getAll();
+
+		return studentDao.getAll();
 	}
 
 	@Override
 	public StudentDTO getById(long id) {
+
+		Student student = new Student();
+		student = studentDao.getById(id);
+
+		StudentDTO studentDTO = new StudentDTO();
+
+		studentDTO.setName(student.getName());
+		studentDTO.setSurname(student.getSurname());
+		studentDTO.setDescription(student.getDescription());
+		studentDTO.setEmail(student.getEmail());
+
+		return studentDTO;
+	}
+
+	@Override
+	public StudentDTO saveOrUpdate(String name, String surname, String description, String email, UserDTO userDTO) {
 		
-//		return studentDao.getById(id);
-		return null;
+		studentDao.saveOrUpdate(name, surname, description, email, userDTO);
+
+		StudentDTO studentDTO = new StudentDTO();
+		studentDTO.setName(name);
+		studentDTO.setSurname(surname);
+		studentDTO.setDescription(description);
+		studentDTO.setEmail(email);
+
+		return studentDTO;
 	}
 
 	@Override
-	public void saveOrUpdate(String name, String surname, String description, String email, UserDTO userDTO) {
-
-//		studentDao.saveOrUpdate(name, surname, description, email, userDTO);
-
-	}
-
-	@Override
-	public void saveOrUpdate(StudentDTO studentDTO) {
+	public StudentDTO saveOrUpdate(StudentDTO studentDTO) {
 	
-		String name = studentDTO.getName();
-		String surname = studentDTO.getSurname();
-		String description = studentDTO.getDescription();
-		String email = studentDTO.getDescription();
+//		String name = studentDTO.getName();
+//		String surname = studentDTO.getSurname();
+//		String description = studentDTO.getDescription();
+//		String email = studentDTO.getDescription();
+//		
+//		studentDao.saveOrUpdate(name, surname, description, email);
 		
-//		saveOrUpdate(name, surname, description, email);
+		return null;
 	}
 
 	@Override

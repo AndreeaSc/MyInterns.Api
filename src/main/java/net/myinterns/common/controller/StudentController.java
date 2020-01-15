@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -36,9 +37,7 @@ public class StudentController {
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<StudentDTO> getList() {
 
-//		return studentDao.getAll();
-	
-		return null;
+		return studentDao.getAll();
 	}
 
 	@GET
@@ -46,12 +45,7 @@ public class StudentController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public StudentDTO getById(@PathParam("id") int id) {
 
-//		StudentDTO student = studentDao.getById(id);
-//		System.out.println(student);
-
-//		return student;
-		
-		return null;
+		return studentManager.getById(id);
 	}
 
 	@PUT
@@ -67,34 +61,37 @@ public class StudentController {
 	@POST
 	@Path("/add")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response add(Student student) {
+	public Response add(Student student) throws JSONException {
+		
+		studentDao.saveOrUpdateDAO(student);
+		return Response.ok(student).build();
+
+//		JSONObject jsonObj, jsonObjUsername;
 //
-//		JSONObject jsonObj;
-//
+//		jsonObj = new JSONObject(student);
+//		jsonObjUsername = jsonObj.getJSONObject("user");
+////		String jsonObjUsername = jsonObj.getJSONObject("user").getString("username");
+////		String jsonObjPassword = jsonObj.getJSONObject("user").getString("password");
+//		UserDTO userDTO = new UserDTO();
+//		String jsonUsername = jsonObjUsername.getString("username");
+////		userDTO.setUsername(jsonObjUsername);
+////		userDTO.setPassword(jsonObjPassword);
+//		
+//		userDTO.setUsername("andreeaFake");
+//		userDTO.setPassword("parolaFake");
+//		
 //		try {
 //			jsonObj = new JSONObject(student);
 //			String name = jsonObj.getString("name");
 //			String surname = jsonObj.getString("surname");
 //			String description = jsonObj.getString("description");
 //			String email = jsonObj.getString("email");
-//			
-//			StudentDTO studentDTO = new StudentDTO();
-//			
-//			studentDTO.setName(name);
-//			studentDTO.setSurname(surname);
-//			studentDTO.setDescription(description);
-//			studentDTO.setEmail(email);
 //
-//
-//			return studentManager.saveOrUpdate(studentDTO);
+//			return studentManager.saveOrUpdate(name, surname, description, email, userDTO);
 //
 //		} catch (Exception e) {
 //			return null;
 //		}
-		
-		studentDao.saveOrUpdate(student);
-
-		return Response.ok(student).build();
 	}
 
 	@DELETE
