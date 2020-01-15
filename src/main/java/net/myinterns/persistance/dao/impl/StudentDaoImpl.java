@@ -9,11 +9,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.andree.MyInterns.common.dto.StudentDTO;
-import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.PersistanceOperations;
 import net.myinterns.persistance.dao.StudentDao;
 import net.myinterns.persistance.entity.Student;
+import net.myinterns.persistance.entity.User;
 
 @Repository
 @Transactional
@@ -24,12 +23,12 @@ public class StudentDaoImpl implements StudentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<StudentDTO> getAll() {
-		final List<StudentDTO> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+	public List<Student> getAll() {
+		final List<Student> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
 
 		System.out.println("************ ALL Students Get it!!!****************");
 
-		for (final StudentDTO detail : detailList) {
+		for (final Student detail : detailList) {
 			System.out.printf("*** Id:%s \t Name:%s \t Surname:%s \n", detail.getId(), detail.getName(),
 					detail.getSurname());
 		}
@@ -38,14 +37,14 @@ public class StudentDaoImpl implements StudentDao {
 	}
 	
 	@Override
-	public StudentDTO getById(long id) {
+	public Student getById(long id) {
 
-		StudentDTO studentDTO = null;
+		Student studentDTO = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE id=:id").setParameter("id", id);
 
 		try {
-			studentDTO = (StudentDTO) q.uniqueResult();
+			studentDTO = (Student) q.uniqueResult();
 		} catch (Exception ex) {
 			System.out.printf("Exception in getStudentbyId: %s \n", ex.getMessage());
 		}
@@ -54,29 +53,29 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public void saveOrUpdate(String name, String surname, String description, String email, UserDTO userDTO) {
+	public void saveOrUpdate(String name, String surname, String description, String email, User user) {
 
-		final StudentDTO student = new StudentDTO(name, surname, description, email, userDTO);
+		final Student student = new Student(name, surname, description, email, user);
 		saveOrUpdate(student);
 	}
 
 	@Override
-	public void saveOrUpdate(StudentDTO studentDTO) {
+	public void saveOrUpdate(Student student) {
 
-		new PersistanceOperations().saveOrUpdate(sessionFactory, studentDTO,
-				"*** Student '" + studentDTO.getName() + "' saved!");
+		new PersistanceOperations().saveOrUpdate(sessionFactory, student,
+				"*** Student '" + student.getName() + "' saved!");
 	}
 
 	@Override
 	public void delete(long id) {
 
-		StudentDTO studentDTO = null;
+		Student student = null;
 
 		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM Student WHERE id=:id").setParameter("id",
 				id);
 
 		try {
-			studentDTO = (StudentDTO) q.uniqueResult();
+			student = (Student) q.uniqueResult();
 		} catch (Exception ex) {
 			System.out.printf("Exception in deleteStudent: %s \n", ex.getMessage());
 		}

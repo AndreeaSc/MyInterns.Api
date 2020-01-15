@@ -19,25 +19,33 @@ public class StudentManagerImpl implements StudentManager {
 	@Override
 	public List<StudentDTO> getAll() {
 		
-		return studentDao.getAll();
+		return null;
+//		return studentDao.getAll();
 	}
 
 	@Override
 	public StudentDTO getById(long id) {
 		
-		return studentDao.getById(id);
+//		return studentDao.getById(id);
+		return null;
 	}
 
 	@Override
 	public void saveOrUpdate(String name, String surname, String description, String email, UserDTO userDTO) {
 
-		studentDao.saveOrUpdate(name, surname, description, email, userDTO);
+//		studentDao.saveOrUpdate(name, surname, description, email, userDTO);
+
 	}
 
 	@Override
 	public void saveOrUpdate(StudentDTO studentDTO) {
-
-		studentDao.saveOrUpdate(studentDTO);
+	
+		String name = studentDTO.getName();
+		String surname = studentDTO.getSurname();
+		String description = studentDTO.getDescription();
+		String email = studentDTO.getDescription();
+		
+//		saveOrUpdate(name, surname, description, email);
 	}
 
 	@Override
