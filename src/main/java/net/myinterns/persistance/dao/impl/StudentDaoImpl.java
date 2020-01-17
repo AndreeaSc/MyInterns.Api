@@ -5,7 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -98,4 +101,25 @@ public class StudentDaoImpl implements StudentDao {
 		q.executeUpdate();
 	}
 
+	@Override
+	public Student updateByEmail(Student student, String email) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		Student studentUpdate = null;
+
+		studentUpdate = (Student) session.createCriteria(Student.class).add(Restrictions.eq("email", email))
+				.uniqueResult();
+
+		studentUpdate.setName(student.getName());
+		studentUpdate.setSurname(student.getSurname());
+		studentUpdate.setDescription(student.getDescription());
+		studentUpdate.setEmail(student.getEmail());
+		System.out.println("a ajuns pana aici" + studentUpdate.toString());
+		session.update(studentUpdate);
+		tx.commit();
+		session.close();
+
+		return studentUpdate;
+	}
 }

@@ -15,13 +15,15 @@ public interface StudentDao {
 
 	void saveOrUpdate(final String name, final String surname, final String description, final String email,
 			final UserDTO user);
-	
+
 	void saveOrUpdateDAO(final String name, final String surname, final String description, final String email,
 			final User user);
 
 	void saveOrUpdate(final StudentDTO studentDTO);
-	
+
 	void saveOrUpdateDAO(final Student student);
 
-	void delete(long id);
+	void delete(long user_id);
+
+	Student updateByEmail(Student student, String email);
 }
