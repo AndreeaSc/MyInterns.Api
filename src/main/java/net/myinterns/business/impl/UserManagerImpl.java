@@ -106,21 +106,20 @@ public class UserManagerImpl implements UserManager {
 	@Override
 	public void delete(long id) {
 
-		userDao.delete(id);
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(id);
+		userDao.delete(userDTO);
 	}
 	
 	@Override
 	public void deleteByUsername(String username) {
 
-		userDao.deleteByUsername(username);
-	}
-	
-	public void deletei(long id) {
 		UserDTO userDTO = new UserDTO();
-		userDTO.setId(id);
-		userDao.deletei(userDTO);
+		userDTO.setUsername(username);
+		userDao.deleteByUsername(userDTO);
+		
+//		userDao.deleteByUsername(username);
 	}
-	
 
 	@Override
 	public UserDTO login(String username, String password) {
