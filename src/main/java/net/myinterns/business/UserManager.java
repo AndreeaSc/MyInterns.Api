@@ -22,8 +22,6 @@ public interface UserManager {
 	UserDTO updateByUsername(UserDTO user, String id);
 
 	void delete(long id);
-
-	void deletei(long id);
 	
 	void deleteByUsername(String username);
 

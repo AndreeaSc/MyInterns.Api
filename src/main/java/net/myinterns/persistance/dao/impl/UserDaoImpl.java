@@ -58,19 +58,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void delete(long id) {
+	public void delete(UserDTO userDTO) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Long id = userDTO.getId();
 		User user = null;
-
-		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE id=:id").setParameter("id",
-				id);
-
+		user = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id)).uniqueResult();
+		Query q = session.createQuery("Select uc FROM Student uc JOIN uc.user u WHERE u.id=:id");
+		q.setParameter("id", id);
+		List<Student> us = new ArrayList<Student>();
 		try {
-			user = (User) q.uniqueResult();
-		} catch (Exception ex) {
-			System.out.printf("Exception in deleteUser: %s \n", ex.getMessage());
+			us.addAll(q.list());
+		} catch (Exception e) {
+		}
+		for (Student student : us) {
+			session.delete(student);
 		}
 
-		q.executeUpdate();
+		session.delete(user);
+		session.getTransaction().commit();
+
+		System.out.println("Deleted Successfully");
 	}
 
 	@Override
@@ -157,36 +165,21 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void deleteByUsername(String username) {
-		User user = null;
-
-		Query q = sessionFactory.getCurrentSession().createQuery("DELETE FROM User WHERE username=:username")
-				.setParameter("username", username);
-
-		try {
-			user = (User) q.uniqueResult();
-		} catch (Exception ex) {
-			System.out.printf("Exception in deleteUserByUsername: %s \n", ex.getMessage());
-		}
-
-		q.executeUpdate();
-	}
-	
-	public void deletei(UserDTO userDTO) {
+	public void deleteByUsername(UserDTO userDTO) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Long id = userDTO.getId();
+		String username = userDTO.getUsername();
 		User user = null;
-		user = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id)).uniqueResult();
-		Query q = session.createQuery("Select uc FROM Student uc JOIN uc.user u WHERE u.id=:id");
-		q.setParameter("id", id);
-		List<Student> uc = new ArrayList<Student>();
+		user = (User) session.createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
+		Query q = session.createQuery("Select us FROM Student us JOIN us.user u WHERE u.username=:username");
+		q.setParameter("username", username);
+		List<Student> us = new ArrayList<Student>();
 		try {
-			uc.addAll(q.list());
+			us.addAll(q.list());
 		} catch (Exception e) {
 		}
-		for (Student usercurs : uc) {
-			session.delete(usercurs);
+		for (Student student : us) {
+			session.delete(student);
 		}
 
 		session.delete(user);

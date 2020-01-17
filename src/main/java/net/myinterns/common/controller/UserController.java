@@ -145,16 +145,6 @@ public class UserController {
 
 		return Response.ok(id).build();
 	}
-
-	@GET
-	@Path("/deletei/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deletei(@PathParam("id") long id) {
-
-		userManager.deletei(id);
-
-		return Response.ok(id).build();
-	}
 	
 	@GET
 	@Path("/delete/user/{username}")

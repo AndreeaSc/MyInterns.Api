@@ -25,11 +25,9 @@ public interface UserDao {
 	
 	User updateByUsername(User user, String username);
 
-	void delete(long id);
+	void delete(UserDTO userDTO);
 
-	void deleteByUsername(String username);
+	void deleteByUsername(UserDTO userDTO);
 
 	User loginCheck(String userName, String password);
-	
-	public void deletei(UserDTO userDTO);
 }
