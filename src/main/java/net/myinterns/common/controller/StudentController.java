@@ -76,10 +76,6 @@ public class StudentController {
 		} catch (Exception e) {
 			return null;
 		}
-
-//		studentDao.saveOrUpdate(student);
-
-//		return Response.ok(student).build();
 	}
 
 	@POST
