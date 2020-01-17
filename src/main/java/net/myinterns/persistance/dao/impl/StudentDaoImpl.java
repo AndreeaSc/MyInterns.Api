@@ -1,5 +1,6 @@
 package net.myinterns.persistance.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -30,16 +31,17 @@ public class StudentDaoImpl implements StudentDao {
 	@Override
 	public List<StudentDTO> getAll() {
 		
-		final List<StudentDTO> detailList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+		final List<Student> studentList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+
+		final List<StudentDTO> studentDTOList = new ArrayList<StudentDTO>();
 
 		System.out.println("************ ALL Students Get it!!!****************");
 
-		for (final StudentDTO detail : detailList) {
-			System.out.printf("*** Id:%s \t Name:%s \t Surname:%s \n", detail.getId(), detail.getName(),
-					detail.getSurname());
+		for (Student student : studentList) {
+			studentDTOList.add(new StudentDTO(student.getName(), student.getSurname()));
 		}
 
-		return detailList;
+		return studentDTOList;
 	}
 
 	@Override
