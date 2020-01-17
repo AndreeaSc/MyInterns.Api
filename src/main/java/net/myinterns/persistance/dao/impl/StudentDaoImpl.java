@@ -117,7 +117,6 @@ public class StudentDaoImpl implements StudentDao {
 		studentUpdate.setSurname(student.getSurname());
 		studentUpdate.setDescription(student.getDescription());
 		studentUpdate.setEmail(student.getEmail());
-		System.out.println("a ajuns pana aici" + studentUpdate.toString());
 		session.update(studentUpdate);
 		tx.commit();
 		session.close();

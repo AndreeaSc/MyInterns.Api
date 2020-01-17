@@ -18,8 +18,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import net.andree.MyInterns.common.dto.StudentDTO;
+import net.andree.MyInterns.common.dto.StudentUserDTO;
 import net.myinterns.business.StudentManager;
 import net.myinterns.persistance.dao.StudentDao;
+import net.myinterns.persistance.dao.UserDao;
 import net.myinterns.persistance.entity.Student;
 import net.myinterns.persistance.entity.User;
 
@@ -29,10 +31,10 @@ public class StudentController {
 	final ApplicationContext appContextDTO = new ClassPathXmlApplicationContext("applicationContextDto.xml");
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	StudentDao studentDao = appContext.getBean(StudentDao.class);
+	UserDao userDao = appContext.getBean(UserDao.class);
 
 	@Autowired
 	private transient StudentManager studentManager = appContextDTO.getBean(StudentManager.class);
-
 	@GET
 	@Path("/students")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -78,6 +80,53 @@ public class StudentController {
 		}
 	}
 
+	@POST
+	@Path("/updateByEmailDTO/{email}")
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public StudentUserDTO updateDTO(@PathParam("email") String email, String studentUser) {
+
+		StudentUserDTO studentUserDTO = new StudentUserDTO();
+		
+		JSONObject jsonObj;
+
+		try {
+			jsonObj = new JSONObject(studentUser);
+			String name = jsonObj.getString("name");
+			String surname = jsonObj.getString("surname");
+			String description = jsonObj.getString("description");
+			String email1 = jsonObj.getString("email");			
+			String password = jsonObj.getString("password");
+			String username = jsonObj.getString("username");
+
+			Student student = new Student();
+			student.setName(name);
+			student.setSurname(surname);
+			student.setDescription(description);
+			student.setEmail(email1);
+			
+			studentDao.updateByEmail(student, email);
+			
+			User user = new User();
+			
+			user.setUsername(username);
+			user.setPassword(password);
+			
+			userDao.updateByUsername(user, username);
+			
+			studentUserDTO.setEmail(email1);
+			studentUserDTO.setDescription(description);
+			studentUserDTO.setName(name);
+			studentUserDTO.setSurname(surname);
+			studentUserDTO.setEmail(email1);
+			studentUserDTO.setPassword(password);
+			
+			return studentUserDTO;
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	@POST
 	@Path("/addDTO")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
