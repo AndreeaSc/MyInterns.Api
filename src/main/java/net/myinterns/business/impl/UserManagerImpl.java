@@ -2,9 +2,12 @@ package net.myinterns.business.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
+
+import com.mysql.cj.xdevapi.SessionFactory;
 
 import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.UserManager;
@@ -21,6 +24,9 @@ public class UserManagerImpl implements UserManager {
 		this.userDao = userDao;
 	}
 
+	@Autowired
+	public SessionFactory sessionFactory;
+	
 	@Override
 	public List<UserDTO> getAll() {
 
@@ -102,12 +108,19 @@ public class UserManagerImpl implements UserManager {
 
 		userDao.delete(id);
 	}
-
+	
 	@Override
 	public void deleteByUsername(String username) {
 
 		userDao.deleteByUsername(username);
 	}
+	
+	public void deletei(long id) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(id);
+		userDao.deletei(userDTO);
+	}
+	
 
 	@Override
 	public UserDTO login(String username, String password) {
@@ -140,7 +153,7 @@ public class UserManagerImpl implements UserManager {
 		user.setPassword(userDTO.getPassword());
 		user.setUsername(userDTO.getUsername());
 		user.setId(id);
-		
+
 		User userUpdated = new User();
 
 		userUpdated = userDao.update(user, id);
@@ -154,7 +167,7 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UserDTO updateByUsername(UserDTO userDTO, String username) {
-		
+
 		User user = new User();
 		user.setIsMentor(userDTO.getIsMentor());
 		user.setPassword(userDTO.getPassword());

@@ -119,34 +119,8 @@ public class StudentController {
 	public Response add(Student student) throws JSONException {
 
 		studentDao.saveOrUpdateDAO(student);
+		
 		return Response.ok(student).build();
-
-//		JSONObject jsonObj;
-
-//		JSONOBJ = NEW JSONOBJECT(STUDENT);
-//		jsonObj = jsonObj.getJSONObject("user");
-//		String jsonObjUsername = jsonObj.getString("user");
-//		String jsonObjPassword = jsonObj.getString("password");
-//		UserDTO userDTO = new UserDTO();
-//		String jsonUsername = jsonObjUsername.getString("username");
-////		userDTO.setUsername(jsonObjUsername);
-////		userDTO.setPassword(jsonObjPassword);
-//		
-//		userDTO.setUsername("andreeaFake");
-//		userDTO.setPassword("parolaFake");
-//		
-//		try {
-//			jsonObj = new JSONObject(student);
-//			String name = jsonObj.getString("name");
-//			String surname = jsonObj.getString("surname");
-//			String description = jsonObj.getString("description");
-//			String email = jsonObj.getString("email");
-//
-//			return studentManager.saveOrUpdate(name, surname, description, email, userDTO);
-//
-//		} catch (Exception e) {
-//			return null;
-//		}
 	}
 
 	@DELETE
