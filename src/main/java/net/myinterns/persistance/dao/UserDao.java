@@ -30,4 +30,6 @@ public interface UserDao {
 	void deleteByUsername(String username);
 
 	User loginCheck(String userName, String password);
+	
+	public void deletei(UserDTO userDTO);
 }

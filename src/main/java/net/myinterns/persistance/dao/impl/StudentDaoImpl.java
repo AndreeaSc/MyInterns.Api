@@ -102,7 +102,7 @@ public class StudentDaoImpl implements StudentDao {
 
 		q.executeUpdate();
 	}
-
+	
 	@Override
 	public Student updateByEmail(Student student, String email) {
 		Session session = sessionFactory.openSession();

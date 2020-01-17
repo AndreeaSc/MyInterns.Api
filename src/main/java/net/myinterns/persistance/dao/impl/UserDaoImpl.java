@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.andree.MyInterns.common.dto.UserDTO;
 import net.myinterns.business.PersistanceOperations;
 import net.myinterns.persistance.dao.UserDao;
+import net.myinterns.persistance.entity.Student;
 import net.myinterns.persistance.entity.User;
 
 @Component
@@ -170,6 +171,29 @@ public class UserDaoImpl implements UserDao {
 
 		q.executeUpdate();
 	}
+	
+	public void deletei(UserDTO userDTO) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Long id = userDTO.getId();
+		User user = null;
+		user = (User) session.createCriteria(User.class).add(Restrictions.eq("id", id)).uniqueResult();
+		Query q = session.createQuery("Select uc FROM Student uc JOIN uc.user u WHERE u.id=:id");
+		q.setParameter("id", id);
+		List<Student> uc = new ArrayList<Student>();
+		try {
+			uc.addAll(q.list());
+		} catch (Exception e) {
+		}
+		for (Student usercurs : uc) {
+			session.delete(usercurs);
+		}
+
+		session.delete(user);
+		session.getTransaction().commit();
+
+		System.out.println("Deleted Successfully");
+	}
 
 	@Override
 	public User getByUsername(String username) {
@@ -209,7 +233,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User updateByUsername(User user, String username) {
-		
+
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
