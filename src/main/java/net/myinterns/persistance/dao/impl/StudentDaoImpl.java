@@ -38,7 +38,7 @@ public class StudentDaoImpl implements StudentDao {
 		System.out.println("************ ALL Students Get it!!!****************");
 
 		for (Student student : studentList) {
-			studentDTOList.add(new StudentDTO(student.getName(), student.getSurname()));
+			studentDTOList.add(new StudentDTO(student.getName(), student.getSurname(), student.getId()));
 		}
 
 		return studentDTOList;
