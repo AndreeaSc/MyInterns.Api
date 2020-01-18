@@ -93,8 +93,7 @@ public class StudentController {
 			jsonObj = new JSONObject(studentUser);
 			String name = jsonObj.getString("name");
 			String surname = jsonObj.getString("surname");
-			String description = jsonObj.getString("description");
-			String email1 = jsonObj.getString("email");			
+			String description = jsonObj.getString("description");	
 			String password = jsonObj.getString("password");
 			String username = jsonObj.getString("username");
 
@@ -102,7 +101,6 @@ public class StudentController {
 			student.setName(name);
 			student.setSurname(surname);
 			student.setDescription(description);
-			student.setEmail(email1);
 			
 			studentDao.updateByEmail(student, email);
 			
@@ -113,11 +111,9 @@ public class StudentController {
 			
 			userDao.updateByUsername(user, username);
 			
-			studentUserDTO.setEmail(email1);
 			studentUserDTO.setDescription(description);
 			studentUserDTO.setName(name);
 			studentUserDTO.setSurname(surname);
-			studentUserDTO.setEmail(email1);
 			studentUserDTO.setPassword(password);
 			
 			return studentUserDTO;
