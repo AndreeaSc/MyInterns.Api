@@ -3,6 +3,7 @@ package net.myinterns.persistance.dao;
 import java.util.List;
 
 import net.myinterns.persistance.entity.Mentor;
+import net.myinterns.persistance.entity.Student;
 import net.myinterns.persistance.entity.User;
 
 public interface MentorDao {
@@ -17,5 +18,5 @@ public interface MentorDao {
 
 	void delete(long id);
 
-//	List<Mentor> getAllMentors();
+	List<Student> getStudentsOfMentor(long id);
 }

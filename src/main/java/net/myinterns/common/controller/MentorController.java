@@ -18,7 +18,7 @@ import net.myinterns.persistance.dao.MentorDao;
 import net.myinterns.persistance.entity.Mentor;
 
 @Path("/mentor")
-public class MentorController {
+public class MentorController  {
 
 	ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 	MentorDao mentorDao = appContext.getBean(MentorDao.class);

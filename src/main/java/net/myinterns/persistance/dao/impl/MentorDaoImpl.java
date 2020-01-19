@@ -12,9 +12,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
 
+import net.andree.MyInterns.common.dto.StudentDTO;
 import net.myinterns.business.PersistanceOperations;
 import net.myinterns.persistance.dao.MentorDao;
 import net.myinterns.persistance.entity.Mentor;
+import net.myinterns.persistance.entity.Student;
 import net.myinterns.persistance.entity.User;
 
 @Repository
@@ -87,5 +89,28 @@ public class MentorDaoImpl implements MentorDao {
 		}
 
 		q.executeUpdate();
+	}
+
+	@Override
+	public List<Student> getStudentsOfMentor(long id) {
+
+		final List<Student> studentList = sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+
+		final List<StudentDTO> studentDTOList = new ArrayList<StudentDTO>();
+
+		System.out.println("************ ALL Students Get it!!!****************");
+
+		for (Student student : studentList) {
+			studentDTOList.add(new StudentDTO(student.getName(), student.getSurname(), student.getId()));
+		}
+
+		Query q = sessionFactory.getCurrentSession().createQuery("select * from mentors_students where WHERE mentor_id=:id").setParameter("mentor_id",
+				id);
+
+		q.executeUpdate();
+//		
+//		ArrayList ids = new ArrayList;
+		
+		return null;
 	}
 }

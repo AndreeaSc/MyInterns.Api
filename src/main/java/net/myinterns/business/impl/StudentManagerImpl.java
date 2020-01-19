@@ -10,8 +10,10 @@ import net.myinterns.persistance.entity.Student;
 import net.myinterns.persistance.entity.User;
 @Repository
 public class StudentManagerImpl implements StudentManager {
+	
 	@Autowired
 	StudentDao studentDao;
+	
 	public void setStudentDao(StudentDao studentDao) {
 		this.studentDao = studentDao;
 	}
@@ -20,14 +22,17 @@ public class StudentManagerImpl implements StudentManager {
 		return studentDao.getAll();
 	}
 	@Override
-	public StudentDTO getById(long id) {
+	public StudentDTO getById(long user_id) {
+		
 		Student student = new Student();
-		student = studentDao.getById(id);
+		student = studentDao.getById(user_id);
+		
 		StudentDTO studentDTO = new StudentDTO();
 		studentDTO.setName(student.getName());
 		studentDTO.setSurname(student.getSurname());
 		studentDTO.setDescription(student.getDescription());
 		studentDTO.setEmail(student.getEmail());
+		
 		return studentDTO;
 	}
 	@Override
