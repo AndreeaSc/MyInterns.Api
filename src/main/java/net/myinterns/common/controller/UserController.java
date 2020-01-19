@@ -36,6 +36,7 @@ public class UserController {
 	@Path("/users")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<UserDTO> getUsers() {
+		
 		return userManager.getAll();
 	}
 

@@ -45,12 +45,13 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public Student getById(long id) {
+	public Student getById(long user_id) {
 
 		Student student = null;
-
-		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE id=:id").setParameter("id", id);
-
+	
+		Query q = sessionFactory.getCurrentSession().createQuery("FROM Student WHERE user_id=:user_id")
+				.setParameter("user_id", user_id);
+		
 		try {
 			student = (Student) q.uniqueResult();
 		} catch (Exception ex) {

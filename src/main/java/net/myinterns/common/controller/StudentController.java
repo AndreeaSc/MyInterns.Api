@@ -39,16 +39,24 @@ public class StudentController {
 	@Path("/students")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<StudentDTO> getList() {
-
+		
 		return studentDao.getAll();
 	}
 
 	@GET
-	@Path("/getBy/{id}")
+	@Path("/getBy/{user_id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public StudentDTO getById(@PathParam("id") int id) {
-
-		return studentManager.getById(id);
+	public StudentDTO getById(@PathParam("user_id") long user_id) {
+		
+		StudentDTO studentDTO = new StudentDTO();
+		Student student = studentDao.getById(user_id);
+		if(null != student) {
+			studentDTO.setDescription(student.getDescription());
+			studentDTO.setEmail(student.getEmail());
+			studentDTO.setName(student.getName());
+			studentDTO.setSurname(student.getSurname());
+		}
+		return studentDTO;
 	}
 
 	@POST

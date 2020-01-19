@@ -57,6 +57,8 @@ http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
 
 	<bean id="userDao" class="net.myinterns.persistance.dao.impl.UserDaoImpl" />
 	<bean id="studentDao" class="net.myinterns.persistance.dao.impl.StudentDaoImpl" />
+	
+	<bean id="mentorDao" class="net.myinterns.persistance.dao.impl.MentorDaoImpl" />
 
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
